@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About FinCalc — Free Financial Calculators for Everyone</title>
+<meta name="description" content="Learn about FinCalc — our mission to provide free, accurate financial calculators for everyone on earth. No ads manipulation, no data collection, no fees.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0f172a;--accent:#6366f1;--accent-hover:#4f46e5;--accent-light:#eef2ff;
+  --success:#10b981;--bg-page:#f8fafc;--bg-card:#ffffff;--border:#e2e8f0;
+  --text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.06);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg-page);color:var(--text-secondary);line-height:1.8;font-size:16px}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text-primary)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.container-sm{max-width:760px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+header{background:var(--primary);padding:0 24px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#fff;text-decoration:none}
+.logo-text span{color:var(--accent)}
+.back-link{color:rgba(255,255,255,0.7);font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;transition:color 0.2s}
+.back-link:hover{color:#fff;text-decoration:none}
+
+/* HERO */
+.page-hero{background:linear-gradient(135deg,#0f172a,#1e1b4b);padding:72px 24px 64px;text-align:center}
+.hero-icon{font-size:64px;margin-bottom:20px;display:block}
+.page-hero h1{font-size:clamp(30px,5vw,48px);font-weight:800;color:#fff;margin-bottom:14px;line-height:1.15}
+.page-hero h1 span{background:linear-gradient(90deg,#a5b4fc,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-hero p{color:rgba(255,255,255,0.65);font-size:17px;max-width:580px;margin:0 auto 28px}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:13px 32px;border-radius:100px;font-size:15px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.25s;text-decoration:none}
+.hero-cta:hover{background:var(--accent-hover);box-shadow:0 6px 20px rgba(99,102,241,0.4);transform:translateY(-2px);text-decoration:none}
+
+/* MISSION */
+.mission-section{padding:64px 0}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.mission-text h2{font-size:32px;font-weight:800;margin-bottom:16px;line-height:1.2}
+.mission-text p{font-size:15px;line-height:1.85;margin-bottom:14px}
+.mission-visual{display:flex;flex-direction:column;gap:16px}
+.mission-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;transition:transform 0.25s}
+.mission-card:hover{transform:translateY(-3px)}
+.mission-icon{font-size:32px;flex-shrink:0}
+.mission-card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.mission-card p{font-size:14px;margin:0;line-height:1.6}
+
+/* VALUES */
+.values-section{background:#fff;padding:64px 0}
+.section-header{text-align:center;margin-bottom:44px}
+.section-label{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:5px 14px;border-radius:100px;margin-bottom:12px;font-family:'Plus Jakarta Sans',sans-serif}
+.section-header h2{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:10px}
+.section-header p{font-size:16px;color:var(--text-muted);max-width:520px;margin:0 auto}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.value-card{background:var(--bg-page);border:1px solid var(--border);border-radius:14px;padding:28px 24px;text-align:center;transition:all 0.25s}
+.value-card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-4px)}
+.value-icon{font-size:40px;margin-bottom:14px}
+.value-card h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.value-card p{font-size:14px;line-height:1.7}
+
+/* STATS */
+.stats-section{background:var(--accent);padding:52px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-item{color:#fff}
+.stat-num{font-size:clamp(30px,4vw,44px);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;line-height:1}
+.stat-label{font-size:14px;opacity:0.85;margin-top:6px}
+
+/* CALCULATORS */
+.calcs-section{padding:64px 0}
+.calcs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.calc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:var(--shadow);transition:all 0.25s;text-decoration:none;display:block;color:inherit}
+.calc-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 24px rgba(99,102,241,0.15);text-decoration:none}
+.calc-card-icon{font-size:36px;margin-bottom:12px}
+.calc-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.calc-card p{font-size:14px;color:var(--text-muted);line-height:1.6}
+.calc-card-tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;padding:3px 10px;border-radius:100px;margin-top:12px}
+
+/* CONTACT */
+.contact-section{background:#fff;padding:64px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-info h2{font-size:28px;font-weight:800;margin-bottom:14px}
+.contact-info p{font-size:15px;margin-bottom:20px;line-height:1.8}
+.contact-items{display:flex;flex-direction:column;gap:14px}
+.contact-item{display:flex;align-items:center;gap:14px;background:var(--bg-page);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+.contact-item-icon{font-size:24px;flex-shrink:0}
+.contact-item-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:2px}
+.contact-item-val{font-size:15px;font-weight:600;color:var(--text-primary)}
+.contact-item-val a{color:var(--accent)}
+.contact-note{background:var(--accent-light);border-radius:12px;padding:24px;margin-top:16px}
+.contact-note h3{font-size:16px;font-weight:700;margin-bottom:10px;color:var(--accent)}
+.contact-note p{font-size:14px;margin:0;line-height:1.7}
+
+/* FOOTER */
+footer{background:var(--primary);padding:28px 24px;text-align:center}
+footer p{color:rgba(255,255,255,0.5);font-size:13px}
+footer a{color:rgba(255,255,255,0.7)}
+footer a:hover{color:#fff}
+
+@media(max-width:900px){
+  .mission-grid,.contact-grid{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:repeat(2,1fr)}
+  .calcs-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .values-grid,.calcs-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo-text">Fin<span>Calc</span></a>
+    <a href="index.html" class="back-link">← Back to Calculators</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="page-hero">
+  <span class="hero-icon">📊</span>
+  <h1>Financial Tools for<br><span>Everyone, Everywhere</span></h1>
+  <p>FinCalc was built with one simple belief — smart financial planning should be free, accessible, and available to every person on earth.</p>
+  <a href="index.html" class="hero-cta">Start Calculating — It's Free →</a>
+</div>
+
+<!-- MISSION -->
+<section class="mission-section">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="mission-text">
+        <h2>Our Mission</h2>
+        <p>Millions of people make financial decisions every day — taking out loans, planning investments, buying homes, negotiating salaries — without the right tools to make informed choices.</p>
+        <p>Financial calculators exist, but many are locked behind paywalls, cluttered with misleading ads, or designed only for one country or currency.</p>
+        <p><strong>FinCalc is different.</strong> We built 6 professional-grade financial calculators, supporting 30+ global currencies, completely free — no account, no subscription, no hidden fees. Just results.</p>
+        <p>Our calculations use the same formulas used by banks and financial institutions worldwide. Whether you're in New York, New Delhi, Nairobi, or anywhere else — FinCalc works for you.</p>
+      </div>
+      <div class="mission-visual">
+        <div class="mission-card">
+          <div class="mission-icon">🌍</div>
+          <div>
+            <h3>Built for the World</h3>
+            <p>30+ currencies, global formulas, no country-specific restrictions. FinCalc works for anyone on earth.</p>
+          </div>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">🔒</div>
+          <div>
+            <h3>Privacy First</h3>
+            <p>All calculations happen in your browser. We never see your numbers. No data is collected, stored, or sold.</p>
+          </div>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">⚡</div>
+          <div>
+            <h3>Instant & Accurate</h3>
+            <p>Real-time results as you type. Standard banking formulas. Charts and breakdowns that actually help you decide.</p>
+          </div>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">💯</div>
+          <div>
+            <h3>Free Forever</h3>
+            <p>No premium plan. No "unlock full results." Everything FinCalc offers is free today and will remain free.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Our Values</div>
+      <h2>What We Stand For</h2>
+      <p>Every decision we make is guided by these core principles.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🆓</div>
+        <h3>Always Free</h3>
+        <p>Financial knowledge shouldn't cost money. All 6 calculators are free, all the time, for every person in every country.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <h3>Accuracy Matters</h3>
+        <p>We use standard financial formulas trusted by banks worldwide. No shortcuts, no approximations that mislead.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Transparent</h3>
+        <p>We're upfront about how we're funded (advertising), what data we don't collect, and how our formulas work.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌐</div>
+        <h3>Globally Inclusive</h3>
+        <p>30+ currencies, mobile-friendly design, and no assumption about which country you're in. Everyone is welcome.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">📱</div>
+        <h3>Mobile First</h3>
+        <p>Most financial decisions happen on the go. FinCalc is designed and tested for phones, tablets, and desktops equally.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🚀</div>
+        <h3>Always Improving</h3>
+        <p>We continuously update our calculators, add currencies, and respond to user feedback to make FinCalc better.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">⚡ Free Calculators</div></div>
+      <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">🌍 Currencies Supported</div></div>
+      <div class="stat-item"><div class="stat-num">500K+</div><div class="stat-label">👥 Users Worldwide</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">💯 Free, Always</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATORS -->
+<section class="calcs-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Our Tools</div>
+      <h2>6 Free Calculators</h2>
+      <p>Everything you need for smart financial planning — in one place.</p>
+    </div>
+    <div class="calcs-grid">
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">💳</div>
+        <h3>Loan EMI Calculator</h3>
+        <p>Calculate monthly payments, total interest, and full amortization schedule for any loan.</p>
+        <span class="calc-card-tag">Most Popular</span>
+      </a>
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">📈</div>
+        <h3>SIP Investment Calculator</h3>
+        <p>Project your mutual fund SIP returns with growth charts and year-by-year wealth breakdown.</p>
+        <span class="calc-card-tag">Investors</span>
+      </a>
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">🏠</div>
+        <h3>Mortgage Calculator</h3>
+        <p>Full home loan breakdown including taxes, insurance, HOA fees, and PMI estimation.</p>
+        <span class="calc-card-tag">Home Buyers</span>
+      </a>
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">💰</div>
+        <h3>Salary Calculator</h3>
+        <p>Estimate your take-home pay after taxes and deductions for 7+ tax regions worldwide.</p>
+        <span class="calc-card-tag">Employees</span>
+      </a>
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">🏦</div>
+        <h3>Fixed Deposit Calculator</h3>
+        <p>Calculate maturity amount on savings with multiple compounding frequencies.</p>
+        <span class="calc-card-tag">Savers</span>
+      </a>
+      <a href="index.html" class="calc-card">
+        <div class="calc-card-icon">📊</div>
+        <h3>Compound Interest</h3>
+        <p>Visualize the power of compounding with initial investment plus monthly contributions.</p>
+        <span class="calc-card-tag">Long-term Planning</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>Have a question, found a bug, or want to suggest a new calculator? We'd love to hear from you. We read every message and typically respond within 2–3 business days.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-val"><a href="mailto:contact@fincalc.com">contact@fincalc.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🌐</div>
+            <div>
+              <div class="contact-item-label">Website</div>
+              <div class="contact-item-val"><a href="index.html">fincalc.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⏱️</div>
+            <div>
+              <div class="contact-item-label">Response Time</div>
+              <div class="contact-item-val">Within 2–3 business days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-note">
+          <h3>📋 What to include in your message</h3>
+          <p>To help us respond quickly, please include:<br><br>
+          • <strong>Bug reports:</strong> The calculator name, what you entered, and what result you expected<br><br>
+          • <strong>Feature requests:</strong> What you'd like to see and why it would help<br><br>
+          • <strong>Currency requests:</strong> The currency name, code, and symbol<br><br>
+          • <strong>General feedback:</strong> Anything that would make FinCalc better for you</p>
+        </div>
+        <div style="margin-top:20px;background:var(--bg-page);border:1px solid var(--border);border-radius:12px;padding:20px 24px">
+          <p style="font-size:14px;line-height:1.8;margin:0">
+            <strong>⚠️ Please note:</strong> FinCalc is a financial calculator tool, not a licensed financial advisor. We cannot provide personalized financial advice. For investment, tax, or legal decisions, please consult a qualified professional. See our <a href="disclaimer.html">Disclaimer</a> for details.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 FinCalc. All rights reserved. &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="disclaimer.html">Disclaimer</a></p>
+</footer>
+
+</body>
+</html>
