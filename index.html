@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>FinCalc — Free Loan EMI, SIP, Mortgage & Salary Calculator</title>
-<meta name="description" content="Free online financial calculators for everyone. Calculate loan EMI, SIP returns, mortgage payments, and take-home salary in 30+ currencies. No signup. Instant results. Trusted worldwide.">
-<meta name="keywords" content="loan EMI calculator, SIP calculator, mortgage calculator, salary calculator, compound interest calculator, fixed deposit calculator, free financial tools">
+<meta name="description" content="Free online financial calculators for everyone. Calculate loan EMI, SIP returns, mortgage payments, and take-home salary in 30+ currencies. No signup. Instant results.">
+<meta name="keywords" content="loan EMI calculator, SIP calculator, mortgage calculator, salary calculator, compound interest calculator, fixed deposit calculator">
 <meta property="og:title" content="FinCalc — Smart Financial Calculators">
-<meta property="og:description" content="Free calculators for loans, investments, mortgage and salary. Works in 30+ currencies. No signup needed.">
+<meta property="og:description" content="Free calculators for loans, investments, mortgage and salary. Works in 30+ currencies.">
 <meta property="og:url" content="https://fincalc.com">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="index, follow">
@@ -15,281 +15,248 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"FinCalc","url":"https://fincalc.com","description":"Free global financial calculators","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["EMI Calculator","SIP Calculator","Mortgage Calculator","Salary Calculator","Fixed Deposit","Compound Interest","30+ Currencies"]}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ── RESET & BASE ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --primary:#0f172a;--accent:#6366f1;--accent-hover:#4f46e5;--accent-light:#eef2ff;
-  --success:#10b981;--warning:#f59e0b;--bg-page:#f8fafc;--bg-card:#ffffff;
-  --border:#e2e8f0;--text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;
-  --result-bg:#eef2ff;--result-border:#6366f1;--ad-bg:#fffbeb;--ad-border:#f59e0b;
-  --radius-card:12px;--radius-input:8px;--radius-btn:100px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.06);
-  --transition:all 0.25s ease;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg-page);color:var(--text-primary);line-height:1.6;font-size:16px}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;line-height:1.6;font-size:16px;overflow-x:hidden;width:100%}
 body.no-scroll{overflow:hidden}
-h1,h2,h3,h4,h5{font-family:'Plus Jakarta Sans',sans-serif}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:'Inter',sans-serif}
-input,select{font-family:'Inter',sans-serif}
-.container{max-width:1200px;margin:0 auto;padding:0 20px}
+input,select,textarea{font-family:'Inter',sans-serif;max-width:100%}
+img,canvas,svg{max-width:100%;display:block}
 
-/* ─── HEADER ─── */
-header{position:sticky;top:0;z-index:100;background:var(--primary);height:64px;transition:var(--transition)}
-header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,0.3)}
-.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.logo{display:flex;flex-direction:column;line-height:1.1;flex-shrink:0}
-.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#fff}
-.logo-text span{color:var(--accent)}
-.logo-tag{font-size:11px;color:var(--text-muted);font-weight:400}
-nav.main-nav{display:flex;gap:4px;align-items:center}
-nav.main-nav a{color:rgba(255,255,255,0.75);font-size:14px;font-weight:500;padding:6px 12px;border-radius:6px;transition:var(--transition);white-space:nowrap}
-nav.main-nav a:hover,nav.main-nav a.active{color:#fff;background:rgba(255,255,255,0.08)}
-nav.main-nav a.active{border-bottom:2px solid var(--accent)}
-.header-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.currency-select-wrap{position:relative}
-#currencySelect{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;appearance:none;-webkit-appearance:none;padding-right:28px;transition:var(--transition)}
-#currencySelect:focus{outline:none;border-color:var(--accent)}
-#currencySelect option{background:#1e293b;color:#fff}
-.currency-arrow{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.6);pointer-events:none;font-size:10px}
-.hamburger{display:none;background:none;border:none;color:#fff;font-size:22px;padding:8px;line-height:1}
-.mobile-nav-overlay{display:none;position:fixed;inset:0;background:var(--primary);z-index:99;flex-direction:column;padding:80px 24px 24px;gap:8px}
-.mobile-nav-overlay.open{display:flex}
-.mobile-nav-overlay a{color:rgba(255,255,255,0.85);font-size:18px;font-weight:600;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);transition:var(--transition)}
-.mobile-nav-overlay a:hover{color:#fff}
-.mobile-close{position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:26px;cursor:pointer}
+/* ── CSS VARS ── */
+:root{
+  --primary:#0f172a;--accent:#6366f1;--accent-hover:#4f46e5;--accent-light:#eef2ff;
+  --success:#10b981;--warning:#f59e0b;--bg:#f8fafc;--card:#fff;
+  --border:#e2e8f0;--t1:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --sh:0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.06);
+}
 
-/* ─── HERO ─── */
-.hero{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);padding:48px 0 40px;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;margin-bottom:20px}
-.hero h1{font-size:clamp(28px,5vw,48px);font-weight:800;color:#fff;line-height:1.1;margin-bottom:6px}
-.hero h2{font-size:clamp(22px,4vw,38px);font-weight:800;background:linear-gradient(90deg,#a5b4fc,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
-.hero-sub{color:rgba(255,255,255,0.65);font-size:15px;margin-bottom:24px}
-.hero-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:24px}
-.hero-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);padding:6px 14px;border-radius:100px;font-size:13px;font-weight:500}
-.hero-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.hero-btn{background:rgba(99,102,241,0.25);border:1px solid rgba(99,102,241,0.5);color:#a5b4fc;padding:8px 20px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;transition:var(--transition)}
-.hero-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* ── CONTAINER ── */
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 16px}
 
-/* ─── AD ZONE ─── */
-.ad-zone{background:var(--ad-bg);border:2px dashed var(--ad-border);border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;color:var(--warning);font-size:13px;font-weight:600;gap:8px;text-align:center}
-.ad-top,.ad-bottom{height:90px;margin:20px auto;max-width:728px}
-.ad-sidebar{height:280px;width:100%}
-.ad-sidebar-tall{height:620px;width:100%}
-.ad-label{opacity:0.7}
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:100;background:var(--primary);box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.hdr{display:flex;align-items:center;justify-content:space-between;height:56px;gap:8px}
+.logo-txt{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:#fff;line-height:1}
+.logo-txt span{color:var(--accent)}
+.logo-sub{font-size:10px;color:#64748b;line-height:1;margin-top:2px}
+nav.desk{display:flex;gap:2px}
+nav.desk a{color:rgba(255,255,255,0.75);font-size:13px;font-weight:500;padding:5px 10px;border-radius:6px;white-space:nowrap;transition:.2s}
+nav.desk a:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cur-wrap{position:relative}
+#curSel{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:7px;padding:5px 26px 5px 8px;font-size:12px;cursor:pointer;-webkit-appearance:none;appearance:none;max-width:120px}
+#curSel option{background:#1e293b;color:#fff}
+.cur-arr{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none;font-size:9px}
+.hbg{display:none;background:none;border:none;color:#fff;font-size:22px;padding:6px;line-height:1}
 
-/* ─── MAIN LAYOUT ─── */
-.main-section{padding:32px 0 48px}
-.main-grid{display:grid;grid-template-columns:63% 1fr;gap:3%}
+/* MOBILE NAV */
+.mob-nav{display:none;position:fixed;inset:0;background:var(--primary);z-index:200;flex-direction:column;padding:70px 24px 24px;gap:4px;overflow-y:auto}
+.mob-nav.open{display:flex}
+.mob-close{position:absolute;top:12px;right:16px;background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
+.mob-nav a{color:rgba(255,255,255,0.85);font-size:17px;font-weight:600;padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
 
-/* ─── TABS ─── */
-.calc-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:24px;scrollbar-width:none}
-.calc-tabs::-webkit-scrollbar{display:none}
-.tab-btn{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;transition:var(--transition);flex-shrink:0}
-.tab-btn:hover{border-color:var(--accent);color:var(--accent)}
-.tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,0.3)}
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0f172a,#1e1b4b);padding:40px 0 32px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:500;margin-bottom:16px}
+.hero h1{font-size:clamp(22px,5vw,44px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero h2{font-size:clamp(18px,4vw,34px);font-weight:800;background:linear-gradient(90deg,#a5b4fc,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero-sub{color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:20px;padding:0 8px}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:18px}
+.pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.8);padding:5px 12px;border-radius:100px;font-size:12px}
+.hero-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hero-btn{background:rgba(99,102,241,0.25);border:1px solid rgba(99,102,241,0.5);color:#a5b4fc;padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:.2s}
+.hero-btn:hover{background:var(--accent);color:#fff}
 
-/* ─── CALCULATOR CARD ─── */
-.calc-panel{display:none;animation:fadeInUp 0.3s ease}
-.calc-panel.active{display:block}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.calc-card{background:var(--bg-card);border-radius:var(--radius-card);border:1px solid var(--border);box-shadow:var(--shadow);padding:28px}
-.calc-title{font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:4px}
-.calc-subtitle{font-size:14px;color:var(--text-muted);margin-bottom:24px}
+/* ── AD ── */
+.ad-zone{background:#fffbeb;border:2px dashed #f59e0b;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#f59e0b;font-size:12px;font-weight:600;text-align:center;padding:8px}
+.ad-top,.ad-bot{height:70px;margin:16px auto;width:100%;max-width:728px}
+.ad-side{height:250px;width:100%}
 
-/* ─── FORM ELEMENTS ─── */
-.field-group{margin-bottom:20px}
-.field-label{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
-.field-display{font-size:13px;font-weight:500;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:100px}
-.field-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-input);font-size:15px;font-weight:500;color:var(--text-primary);transition:var(--transition);background:#fff}
-.field-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
-.field-input::placeholder{color:var(--text-muted)}
-.field-slider{width:100%;margin-top:10px;accent-color:var(--accent);cursor:pointer}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.toggle-wrap{display:flex;background:#f1f5f9;border-radius:8px;padding:3px}
-.toggle-btn{flex:1;padding:8px 12px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--text-secondary);transition:var(--transition)}
-.toggle-btn.active{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
-select.field-input{cursor:pointer}
-.hint-text{font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic}
-.expandable-section{border:1px solid var(--border);border-radius:var(--radius-input);overflow:hidden;margin-bottom:20px}
-.expandable-header{padding:12px 16px;background:#f8fafc;cursor:pointer;font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;user-select:none}
-.expandable-header:hover{background:#f1f5f9}
-.expandable-body{padding:16px;display:none}
-.expandable-body.open{display:block}
+/* ── LAYOUT ── */
+.main-sec{padding:24px 0 40px}
+.main-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:1024px){.main-grid{grid-template-columns:62% 1fr;gap:24px}}
 
-/* ─── CALC BUTTON ─── */
-.calc-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-btn);font-size:16px;font-weight:700;cursor:pointer;transition:var(--transition);margin-top:4px;font-family:'Plus Jakarta Sans',sans-serif}
-.calc-btn:hover{background:var(--accent-hover);box-shadow:0 4px 16px rgba(99,102,241,0.4);transform:translateY(-1px)}
-.calc-btn:active{transform:translateY(0)}
+/* ── TABS ── */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tbtn{display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:.2s}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
-/* ─── RESULT BOX ─── */
-.result-box{background:var(--result-bg);border-left:4px solid var(--result-border);border-radius:var(--radius-card);padding:20px;margin-top:20px;animation:slideInUp 0.4s ease;display:none}
-.result-box.show{display:block}
-@keyframes slideInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.metric-card{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.metric-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:6px}
-.metric-value{font-size:18px;font-weight:800;color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.2}
-.metric-value.success{color:var(--success)}
-.metric-value.accent{color:var(--accent)}
+/* ── CALC CARD ── */
+.cpanel{display:none}
+.cpanel.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ccard{background:#fff;border-radius:12px;border:1px solid var(--border);box-shadow:var(--sh);padding:20px 16px}
+@media(min-width:600px){.ccard{padding:24px}}
+.ctitle{font-size:20px;font-weight:800;margin-bottom:4px}
+.csub{font-size:13px;color:var(--t3);margin-bottom:20px}
 
-/* ─── CANVAS CHARTS ─── */
-.chart-wrap{margin-top:16px;text-align:center}
-.chart-wrap canvas{max-width:100%;border-radius:8px}
-.chart-legend{display:flex;justify-content:center;gap:20px;margin-top:10px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary)}
-.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+/* ── FORM ── */
+.fg{margin-bottom:18px;width:100%}
+.flbl{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;margin-bottom:7px;flex-wrap:wrap;gap:4px}
+.fdisp{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-light);padding:2px 9px;border-radius:100px}
+.finp{width:100%;padding:11px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:16px;font-weight:500;color:var(--t1);transition:.2s;background:#fff;-webkit-appearance:none}
+.finp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+.finp::placeholder{color:var(--t3)}
+select.finp{cursor:pointer;padding-right:8px}
+.fslider{width:100%;margin-top:8px;accent-color:var(--accent);cursor:pointer;height:20px}
+.hint{font-size:11px;color:var(--t3);margin-top:4px;font-style:italic}
+/* 2-col row — stacks on mobile */
+.frow{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:480px){.frow{grid-template-columns:1fr 1fr}}
+/* toggle */
+.tog{display:flex;background:#f1f5f9;border-radius:8px;padding:3px;width:100%}
+.togbtn{flex:1;padding:7px 10px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--t2);transition:.2s}
+.togbtn.active{background:#fff;color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+/* expandable */
+.expwrap{border:1px solid var(--border);border-radius:8px;margin-bottom:18px;overflow:hidden}
+.exphdr{padding:11px 14px;background:#f8fafc;cursor:pointer;font-size:13px;font-weight:600;display:flex;justify-content:space-between;user-select:none}
+.exphdr:hover{background:#f1f5f9}
+.expbdy{padding:14px;display:none}
+.expbdy.open{display:block}
+/* button */
+.cbtn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;margin-top:4px}
+.cbtn:hover{background:var(--accent-hover);transform:translateY(-1px)}
 
-/* ─── AMORTIZATION ─── */
-.amort-toggle{width:100%;padding:10px;background:#fff;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:var(--transition);margin-top:12px}
-.amort-toggle:hover{border-color:var(--accent);color:var(--accent)}
-.amort-wrap{margin-top:12px;display:none;overflow-x:auto}
+/* ── RESULTS ── */
+.rbox{background:#eef2ff;border-left:4px solid var(--accent);border-radius:12px;padding:16px;margin-top:16px}
+/* metric grid — always 1 col on mobile, 3 on wide */
+.mgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px}
+@media(min-width:400px){.mgrid{grid-template-columns:1fr 1fr}}
+@media(min-width:700px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mcard{background:#fff;border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)}
+.mlbl{font-size:11px;color:var(--t3);font-weight:500;margin-bottom:5px}
+.mval{font-size:17px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;line-height:1.2}
+.mval.ac{color:var(--accent)}
+.mval.gr{color:var(--success)}
+
+/* charts */
+.cwrap{margin-top:14px;text-align:center;width:100%;overflow:hidden}
+.cwrap canvas{width:100% !important;height:auto;border-radius:8px}
+.legend{display:flex;justify-content:center;gap:16px;margin-top:8px;flex-wrap:wrap}
+.leg-i{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t2)}
+.leg-d{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+
+/* amort */
+.amort-tog{width:100%;padding:9px;background:#fff;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--t2);cursor:pointer;margin-top:10px;transition:.2s}
+.amort-tog:hover{border-color:var(--accent);color:var(--accent)}
+.amort-wrap{margin-top:10px;display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;max-width:100%}
 .amort-wrap.show{display:block}
-.amort-table{width:100%;border-collapse:collapse;font-size:13px;min-width:500px}
-.amort-table th{background:var(--accent);color:#fff;padding:10px 12px;text-align:left;font-weight:600;font-size:12px}
-.amort-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
-.amort-table tr:nth-child(even) td{background:#f8fafc}
-.show-all-btn{margin-top:8px;padding:8px 16px;background:#fff;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-secondary);transition:var(--transition)}
-.show-all-btn:hover{border-color:var(--accent);color:var(--accent)}
+.atable{width:100%;border-collapse:collapse;font-size:12px;min-width:320px}
+.atable th{background:var(--accent);color:#fff;padding:8px 10px;text-align:left;font-size:11px}
+.atable td{padding:7px 10px;border-bottom:1px solid var(--border)}
+.atable tr:nth-child(even) td{background:#f8fafc}
+.show-all{margin-top:6px;padding:7px 14px;background:#fff;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--t2)}
 
-/* ─── MORTGAGE RESULT CARD ─── */
-.mortgage-breakdown{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
-.mortgage-total{background:var(--accent);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-.mortgage-total-label{font-size:14px;font-weight:600;opacity:0.9}
-.mortgage-total-value{font-size:24px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif}
-.mortgage-line{display:flex;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--border);font-size:14px}
-.mortgage-line:last-child{border-bottom:none}
-.mortgage-line-label{color:var(--text-secondary)}
-.mortgage-line-value{font-weight:600}
+/* mortgage */
+.mort-bk{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px}
+.mort-tot{background:var(--accent);color:#fff;padding:14px 16px}
+.mort-tot-lbl{font-size:13px;font-weight:600;opacity:.9;margin-bottom:4px}
+.mort-tot-val{font-size:22px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif}
+.mort-ln{display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;gap:4px}
+.mort-ln:last-child{border-bottom:none}
+.mort-ln span:last-child{font-weight:600}
 
-/* ─── SALARY RESULT ─── */
-.pay-tabs{display:flex;gap:6px;margin-bottom:16px}
-.pay-tab{padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);color:var(--text-secondary)}
-.pay-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.salary-breakdown{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden}
-.salary-gross{background:var(--text-primary);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;font-size:15px;font-weight:700}
-.salary-line{display:flex;justify-content:space-between;padding:9px 20px;border-bottom:1px solid var(--border);font-size:14px}
-.salary-line.deduct{color:#ef4444}
-.salary-net{background:#ecfdf5;padding:14px 20px;display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:var(--success);border-top:2px solid var(--success)}
+/* salary */
+.ptabs{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.ptab{padding:6px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;color:var(--t2)}
+.ptab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.sal-bk{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.sal-gross{background:var(--t1);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;font-size:14px;font-weight:700;flex-wrap:wrap;gap:4px}
+.sal-ln{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;gap:4px}
+.sal-ln.ded{color:#ef4444}
+.sal-net{background:#ecfdf5;padding:12px 14px;display:flex;justify-content:space-between;font-size:15px;font-weight:800;color:var(--success);border-top:2px solid var(--success);flex-wrap:wrap;gap:4px}
 
-/* ─── SIDEBAR ─── */
-.sidebar{display:flex;flex-direction:column;gap:16px}
-.sidebar-card{background:var(--bg-card);border-radius:var(--radius-card);border:1px solid var(--border);box-shadow:var(--shadow);padding:20px}
-.sidebar-card h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-primary)}
-.why-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.why-list li{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary)}
-.why-list li::before{content:"✓";color:var(--accent);font-weight:800;flex-shrink:0}
-.quick-links{list-style:none;display:flex;flex-direction:column;gap:2px}
-.quick-links li a{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary);padding:8px 4px;border-radius:6px;transition:var(--transition);font-weight:500}
-.quick-links li a:hover{color:var(--accent);background:var(--accent-light);padding-left:10px}
-.quick-links li a::before{content:"→";color:var(--accent);font-size:12px}
-.currency-info-display{display:flex;align-items:center;gap:10px;padding:12px;background:var(--accent-light);border-radius:10px;margin-bottom:12px}
-.currency-flag{font-size:28px}
-.currency-info-text{flex:1}
-.currency-info-name{font-weight:700;font-size:15px}
-.currency-info-sym{font-size:13px;color:var(--text-muted)}
-.change-currency-btn{padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;transition:var(--transition)}
-.change-currency-btn:hover{background:var(--accent-hover)}
-.currency-note{font-size:12px;color:var(--text-muted);text-align:center}
+/* wealth */
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.witem{background:#fff;border-radius:8px;padding:10px;border:1px solid var(--border)}
+.wlbl{font-size:11px;color:var(--t3);margin-bottom:3px}
+.wval{font-size:15px;font-weight:700;color:var(--accent);font-family:'Plus Jakarta Sans',sans-serif}
 
-/* ─── HOW IT WORKS ─── */
-.how-section{background:var(--bg-page);padding:60px 0}
-.section-header{text-align:center;margin-bottom:40px}
-.section-title{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:10px}
-.section-sub{font-size:16px;color:var(--text-secondary)}
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.step-card{background:#fff;border-radius:var(--radius-card);border:1px solid var(--border);box-shadow:var(--shadow);padding:28px;text-align:center;transition:var(--transition)}
-.step-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.1);border-color:var(--accent)}
-.step-icon{font-size:40px;margin-bottom:12px}
-.step-num{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:10px}
-.step-title{font-size:18px;font-weight:700;margin-bottom:8px}
-.step-desc{font-size:14px;color:var(--text-secondary);line-height:1.6}
+/* ── SIDEBAR ── */
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.scard{background:#fff;border-radius:12px;border:1px solid var(--border);box-shadow:var(--sh);padding:16px}
+.scard h3{font-size:15px;font-weight:700;margin-bottom:10px}
+.wl{list-style:none;display:flex;flex-direction:column;gap:7px}
+.wl li{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--t2)}
+.wl li::before{content:"✓";color:var(--accent);font-weight:800;flex-shrink:0}
+.ql{list-style:none;display:flex;flex-direction:column;gap:2px}
+.ql li a{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t2);padding:7px 4px;border-radius:6px;transition:.2s;font-weight:500}
+.ql li a:hover{color:var(--accent);background:var(--accent-light);padding-left:8px}
+.ql li a::before{content:"→";color:var(--accent);font-size:11px}
+.cur-disp{display:flex;align-items:center;gap:10px;padding:10px;background:var(--accent-light);border-radius:10px;margin-bottom:10px}
+.cur-flag{font-size:26px}
+.cur-name{font-weight:700;font-size:14px}
+.cur-code{font-size:12px;color:var(--t3)}
+.cur-note{font-size:11px;color:var(--t3);text-align:center}
 
-/* ─── STATS STRIP ─── */
-.stats-strip{background:var(--accent);padding:36px 0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
-.stat-item{color:#fff}
-.stat-num{font-size:clamp(28px,4vw,40px);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;line-height:1}
-.stat-label{font-size:14px;opacity:0.85;margin-top:4px}
+/* ── HOW ── */
+.how-sec{background:#f8fafc;padding:48px 0}
+.sec-hdr{text-align:center;margin-bottom:32px}
+.sec-lbl{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:10px}
+.sec-hdr h2{font-size:clamp(22px,4vw,32px);font-weight:800;margin-bottom:8px}
+.sec-hdr p{font-size:14px;color:var(--t3);max-width:480px;margin:0 auto}
+.steps{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step-c{background:#fff;border-radius:12px;border:1px solid var(--border);box-shadow:var(--sh);padding:24px;text-align:center}
+.step-ic{font-size:36px;margin-bottom:10px}
+.step-nm{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:8px}
+.step-c h3{font-size:16px;font-weight:700;margin-bottom:7px}
+.step-c p{font-size:13px;color:var(--t2);line-height:1.6}
 
-/* ─── FAQ ─── */
-.faq-section{padding:60px 0;background:#fff}
-.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
-.faq-item{border:1px solid var(--border);border-radius:var(--radius-input);overflow:hidden}
-.faq-q{padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;user-select:none;transition:var(--transition)}
-.faq-q:hover{background:var(--accent-light);color:var(--accent)}
-.faq-q.open{background:var(--accent-light);color:var(--accent)}
-.faq-arrow{transition:transform 0.3s ease;font-size:12px;flex-shrink:0}
-.faq-q.open .faq-arrow{transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease;font-size:14px;color:var(--text-secondary);line-height:1.7}
-.faq-a.open{max-height:400px}
-.faq-a-inner{padding:0 20px 18px}
-.faq-a code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;color:var(--accent)}
+/* ── STATS ── */
+.stats-sec{background:var(--accent);padding:36px 0}
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;text-align:center}
+@media(min-width:640px){.sgrid{grid-template-columns:repeat(4,1fr)}}
+.sitem{color:#fff}
+.snum{font-size:clamp(26px,5vw,40px);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;line-height:1}
+.slbl{font-size:13px;opacity:.85;margin-top:4px}
 
-/* ─── FOOTER ─── */
-footer{background:var(--primary);color:rgba(255,255,255,0.75);padding:56px 0 0}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;margin-bottom:40px}
-.footer-brand .logo-text{font-size:24px;margin-bottom:8px;display:block}
-.footer-tagline{font-size:14px;line-height:1.6;margin-bottom:16px;opacity:0.7}
-.social-icons{display:flex;gap:12px}
-.social-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;transition:var(--transition);font-size:16px}
-.social-icon:hover{background:var(--accent)}
-.footer-col h4{color:#fff;font-size:15px;font-weight:700;margin-bottom:16px}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
-.footer-links a{font-size:14px;color:rgba(255,255,255,0.6);transition:var(--transition)}
-.footer-links a:hover{color:#fff}
-.currency-flags-grid{display:flex;flex-wrap:wrap;gap:6px}
-.currency-flag-item{font-size:20px;cursor:default}
-.footer-more{font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px}
-.footer-bar{border-top:1px solid rgba(255,255,255,0.08);padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;color:rgba(255,255,255,0.4)}
+/* ── FAQ ── */
+.faq-sec{padding:48px 0;background:#fff}
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.fq{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.fqq{padding:15px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;user-select:none;transition:.2s;gap:10px}
+.fqq:hover,.fqq.open{background:var(--accent-light);color:var(--accent)}
+.farr{transition:transform .3s;font-size:11px;flex-shrink:0}
+.fqq.open .farr{transform:rotate(180deg)}
+.fqa{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:13px;color:var(--t2);line-height:1.7}
+.fqa.open{max-height:300px}
+.fqa-in{padding:0 16px 14px}
+.fqa code{background:#f1f5f9;padding:2px 5px;border-radius:4px;font-family:monospace;font-size:12px;color:var(--accent)}
 
-/* ─── WEALTH BREAKDOWN ─── */
-.wealth-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-.wealth-item{background:#fff;border-radius:8px;padding:12px;border:1px solid var(--border)}
-.wealth-item-label{font-size:12px;color:var(--text-muted);margin-bottom:4px}
-.wealth-item-val{font-size:16px;font-weight:700;color:var(--accent);font-family:'Plus Jakarta Sans',sans-serif}
-
-/* ─── RESPONSIVE ─── */
-@media(max-width:1024px){
-  .main-grid{grid-template-columns:1fr}
-  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .ad-sidebar-tall{display:none}
-}
-@media(max-width:768px){
-  nav.main-nav{display:none}
-  .hamburger{display:block}
-  .main-grid{grid-template-columns:1fr}
-  .sidebar{display:flex}
-  .steps-grid{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
-  .metrics-row{grid-template-columns:1fr}
-  .ad-top,.ad-bottom{height:60px}
-}
-@media(max-width:480px){
-  .footer-grid{grid-template-columns:1fr}
-  .hero-pills{gap:6px}
-  .pay-tabs{flex-wrap:wrap}
-  .wealth-grid{grid-template-columns:1fr}
-}
-
-/* ─── TOOLTIP ─── */
-.chart-tooltip{position:fixed;background:var(--primary);color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;pointer-events:none;z-index:1000;display:none;white-space:nowrap}
+/* ── FOOTER ── */
+footer{background:var(--primary);color:rgba(255,255,255,0.7);padding:48px 0 0}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:32px}
+@media(min-width:768px){.fgrid{grid-template-columns:2fr 1fr 1fr 1.5fr}}
+.flogo{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#fff;display:block;margin-bottom:8px}
+.flogo span{color:var(--accent)}
+.ftag{font-size:13px;line-height:1.7;margin-bottom:14px;opacity:.7}
+.ficons{display:flex;gap:10px}
+.ficon{width:32px;height:32px;border-radius:7px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s}
+.ficon:hover{background:var(--accent)}
+.fh4{color:#fff;font-size:14px;font-weight:700;margin-bottom:12px}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:7px}
+.flinks a{font-size:13px;color:rgba(255,255,255,0.6);transition:.2s}
+.flinks a:hover{color:#fff}
+.flagsgrid{display:flex;flex-wrap:wrap;gap:5px}
+.fbar{border-top:1px solid rgba(255,255,255,0.08);padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:rgba(255,255,255,0.35);text-align:center}
+@media(min-width:640px){.fbar{flex-direction:row;justify-content:space-between}}
 </style>
 </head>
 <body>
 
-<!-- TOOLTIP -->
-<div class="chart-tooltip" id="chartTooltip"></div>
-
 <!-- MOBILE NAV -->
-<div class="mobile-nav-overlay" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" id="mobClose">✕</button>
   <a href="#" onclick="closeMenu();switchTab('emi')">💳 Loan EMI</a>
   <a href="#" onclick="closeMenu();switchTab('sip')">📈 SIP Investment</a>
   <a href="#" onclick="closeMenu();switchTab('mortgage')">🏠 Mortgage</a>
@@ -300,582 +267,360 @@ footer{background:var(--primary);color:rgba(255,255,255,0.75);padding:56px 0 0}
 </div>
 
 <!-- HEADER -->
-<header id="mainHeader">
-  <div class="container header-inner">
-    <div class="logo">
-      <span class="logo-text">Fin<span>Calc</span></span>
-      <span class="logo-tag">Smart Financial Tools</span>
+<header>
+  <div class="wrap hdr">
+    <div>
+      <div class="logo-txt">Fin<span>Calc</span></div>
+      <div class="logo-sub">Smart Financial Tools</div>
     </div>
-    <nav class="main-nav">
-      <a href="#" class="active">Home</a>
+    <nav class="desk">
       <a href="#" onclick="switchTab('emi');return false">Loan EMI</a>
-      <a href="#" onclick="switchTab('sip');return false">SIP &amp; Investment</a>
+      <a href="#" onclick="switchTab('sip');return false">SIP</a>
       <a href="#" onclick="switchTab('salary');return false">Salary</a>
       <a href="#" onclick="switchTab('mortgage');return false">Mortgage</a>
       <a href="about.html">About</a>
     </nav>
-    <div class="header-right">
-      <div class="currency-select-wrap">
-        <select id="currencySelect" onchange="setCurrency(this.value)" aria-label="Select currency"></select>
-        <span class="currency-arrow">▼</span>
+    <div class="hdr-r">
+      <div class="cur-wrap">
+        <select id="curSel" onchange="setCurrency(this.value)"></select>
+        <span class="cur-arr">▼</span>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+      <button class="hbg" id="hbg">☰</button>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container">
+  <div class="wrap">
     <div class="hero-badge">✦ Free Forever — No Signup Required</div>
     <h1>Smart Financial Calculators</h1>
     <h2>for Everyone, Everywhere</h2>
     <p class="hero-sub">Calculate loans, investments, mortgage &amp; salary in your currency</p>
-    <div class="hero-pills">
-      <span class="hero-pill">🌍 30+ Currencies</span>
-      <span class="hero-pill">⚡ Instant Results</span>
-      <span class="hero-pill">📱 Mobile Friendly</span>
-      <span class="hero-pill">🔒 100% Free</span>
+    <div class="pills">
+      <span class="pill">🌍 30+ Currencies</span>
+      <span class="pill">⚡ Instant Results</span>
+      <span class="pill">📱 Mobile Friendly</span>
+      <span class="pill">🔒 100% Free</span>
     </div>
     <div class="hero-btns">
-      <button class="hero-btn" onclick="switchTab('emi');document.querySelector('.main-section').scrollIntoView({behavior:'smooth'})">Loan EMI</button>
-      <button class="hero-btn" onclick="switchTab('sip');document.querySelector('.main-section').scrollIntoView({behavior:'smooth'})">SIP Calculator</button>
-      <button class="hero-btn" onclick="switchTab('mortgage');document.querySelector('.main-section').scrollIntoView({behavior:'smooth'})">Mortgage</button>
-      <button class="hero-btn" onclick="switchTab('salary');document.querySelector('.main-section').scrollIntoView({behavior:'smooth'})">Salary</button>
+      <button class="hero-btn" onclick="jump('emi')">Loan EMI</button>
+      <button class="hero-btn" onclick="jump('sip')">SIP Calculator</button>
+      <button class="hero-btn" onclick="jump('mortgage')">Mortgage</button>
+      <button class="hero-btn" onclick="jump('salary')">Salary</button>
     </div>
   </div>
 </section>
 
 <!-- TOP AD -->
-<div class="container">
-  <div class="ad-zone ad-top">
-    <span class="ad-label">📢 Advertisement — Google AdSense 728×90</span>
-  </div>
-</div>
+<div class="wrap"><div class="ad-zone ad-top">📢 Advertisement — Google AdSense 728×90</div></div>
 
-<!-- MAIN CONTENT -->
-<section class="main-section">
-  <div class="container">
+<!-- MAIN -->
+<section class="main-sec">
+  <div class="wrap">
     <div class="main-grid">
-      <!-- LEFT COLUMN -->
+      <!-- LEFT -->
       <div>
         <!-- TABS -->
-        <div class="calc-tabs">
-          <button class="tab-btn active" data-tab="emi" onclick="switchTab('emi')">💳 Loan EMI</button>
-          <button class="tab-btn" data-tab="sip" onclick="switchTab('sip')">📈 SIP Investment</button>
-          <button class="tab-btn" data-tab="mortgage" onclick="switchTab('mortgage')">🏠 Mortgage</button>
-          <button class="tab-btn" data-tab="salary" onclick="switchTab('salary')">💰 Salary</button>
-          <button class="tab-btn" data-tab="fd" onclick="switchTab('fd')">🏦 Fixed Deposit</button>
-          <button class="tab-btn" data-tab="compound" onclick="switchTab('compound')">📊 Compound Interest</button>
+        <div class="tabs">
+          <button class="tbtn active" data-tab="emi" onclick="switchTab('emi')">💳 Loan EMI</button>
+          <button class="tbtn" data-tab="sip" onclick="switchTab('sip')">📈 SIP</button>
+          <button class="tbtn" data-tab="mortgage" onclick="switchTab('mortgage')">🏠 Mortgage</button>
+          <button class="tbtn" data-tab="salary" onclick="switchTab('salary')">💰 Salary</button>
+          <button class="tbtn" data-tab="fd" onclick="switchTab('fd')">🏦 FD</button>
+          <button class="tbtn" data-tab="compound" onclick="switchTab('compound')">📊 Compound</button>
         </div>
 
-        <!-- ═══════════ CALC 1: LOAN EMI ═══════════ -->
-        <div class="calc-panel active" id="panel-emi">
-          <div class="calc-card">
-            <h2 class="calc-title">Loan EMI Calculator</h2>
-            <p class="calc-subtitle">Calculate monthly payments for any loan</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Loan Amount</span>
-                <span class="field-display" id="emiAmtDisplay">$10,000</span>
-              </div>
-              <input type="number" class="field-input" id="emiAmount" value="10000" min="1000" max="10000000" placeholder="Enter loan amount" oninput="syncSlider('emiAmount','emiAmtSlider');updateEmiDisplay();calcEMI()">
-              <input type="range" class="field-slider" id="emiAmtSlider" min="1000" max="1000000" step="1000" value="10000" oninput="syncInput('emiAmtSlider','emiAmount');updateEmiDisplay();calcEMI()">
+        <!-- ═══ EMI ═══ -->
+        <div class="cpanel active" id="panel-emi">
+          <div class="ccard">
+            <h2 class="ctitle">Loan EMI Calculator</h2>
+            <p class="csub">Calculate monthly payments for any loan</p>
+            <div class="fg">
+              <div class="flbl"><span>Loan Amount</span><span class="fdisp" id="emiAmtD">$10,000</span></div>
+              <input type="number" class="finp" id="emiAmt" value="10000" min="100" max="10000000" oninput="sy('emiAmt','emiAmtS');udEmi();calcEMI()">
+              <input type="range" class="fslider" id="emiAmtS" min="100" max="1000000" step="500" value="10000" oninput="si('emiAmtS','emiAmt');udEmi();calcEMI()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Annual Interest Rate</span>
-                <span class="field-display" id="emiRateDisplay">7.5% per year</span>
-              </div>
-              <input type="number" class="field-input" id="emiRate" value="7.5" min="0.1" max="50" step="0.1" oninput="syncSlider('emiRate','emiRateSlider');updateEmiDisplay();calcEMI()">
-              <input type="range" class="field-slider" id="emiRateSlider" min="0.1" max="30" step="0.1" value="7.5" oninput="syncInput('emiRateSlider','emiRate');updateEmiDisplay();calcEMI()">
+            <div class="fg">
+              <div class="flbl"><span>Annual Interest Rate</span><span class="fdisp" id="emiRateD">7.5%</span></div>
+              <input type="number" class="finp" id="emiRate" value="7.5" min="0.1" max="50" step="0.1" oninput="sy('emiRate','emiRateS');udEmi();calcEMI()">
+              <input type="range" class="fslider" id="emiRateS" min="0.1" max="30" step="0.1" value="7.5" oninput="si('emiRateS','emiRate');udEmi();calcEMI()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Loan Tenure</span>
-                <span class="field-display" id="emiTenureDisplay">5 Years</span>
+            <div class="fg">
+              <div class="flbl"><span>Loan Tenure</span><span class="fdisp" id="emiTenD">5 Years</span></div>
+              <div class="tog" style="margin-bottom:8px">
+                <button class="togbtn active" id="emiYB" onclick="setEmiMode('years')">Years</button>
+                <button class="togbtn" id="emiMB" onclick="setEmiMode('months')">Months</button>
               </div>
-              <div class="toggle-wrap" style="margin-bottom:10px">
-                <button class="toggle-btn active" id="emiYrBtn" onclick="setEmiMode('years')">Years</button>
-                <button class="toggle-btn" id="emiMoBtn" onclick="setEmiMode('months')">Months</button>
+              <input type="number" class="finp" id="emiTen" value="5" min="1" max="30" oninput="sy('emiTen','emiTenS');udEmi();calcEMI()">
+              <input type="range" class="fslider" id="emiTenS" min="1" max="30" step="1" value="5" oninput="si('emiTenS','emiTen');udEmi();calcEMI()">
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Loan Type</span></div>
+              <select class="finp"><option>Personal Loan</option><option>Home Loan</option><option>Car Loan</option><option>Education Loan</option><option>Business Loan</option></select>
+            </div>
+            <button class="cbtn" onclick="calcEMI()">Calculate EMI</button>
+            <div class="rbox" id="emiRes">
+              <div class="mgrid">
+                <div class="mcard"><div class="mlbl">Monthly EMI</div><div class="mval ac" id="emiMon">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Interest</div><div class="mval" id="emiInt">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Amount</div><div class="mval gr" id="emiTot">—</div></div>
               </div>
-              <input type="number" class="field-input" id="emiTenure" value="5" min="1" max="30" oninput="syncSlider('emiTenure','emiTenureSlider');updateEmiDisplay();calcEMI()">
-              <input type="range" class="field-slider" id="emiTenureSlider" min="1" max="30" step="1" value="5" oninput="syncInput('emiTenureSlider','emiTenure');updateEmiDisplay();calcEMI()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Loan Type</span></div>
-              <select class="field-input" id="emiLoanType">
-                <option>Personal Loan</option>
-                <option>Home Loan</option>
-                <option>Car Loan</option>
-                <option>Education Loan</option>
-                <option>Business Loan</option>
-              </select>
-            </div>
-
-            <button class="calc-btn" onclick="calcEMI()">Calculate EMI</button>
-
-            <div class="result-box show" id="emiResult">
-              <div class="metrics-row">
-                <div class="metric-card">
-                  <div class="metric-label">Monthly EMI</div>
-                  <div class="metric-value accent" id="emiMonthly">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Total Interest</div>
-                  <div class="metric-value" id="emiTotalInt">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Total Amount</div>
-                  <div class="metric-value success" id="emiTotal">—</div>
+              <div class="cwrap">
+                <canvas id="emiDonut"></canvas>
+                <div class="legend">
+                  <div class="leg-i"><div class="leg-d" style="background:#6366f1"></div>Principal</div>
+                  <div class="leg-i"><div class="leg-d" style="background:#10b981"></div>Interest</div>
                 </div>
               </div>
-              <div class="chart-wrap">
-                <canvas id="emiDonut" width="220" height="220"></canvas>
-                <div class="chart-legend">
-                  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Principal</div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Interest</div>
-                </div>
-              </div>
-              <button class="amort-toggle" onclick="toggleAmort()">▼ View Full Amortization Schedule</button>
+              <button class="amort-tog" onclick="toggleAmort()">▼ View Amortization Schedule</button>
               <div class="amort-wrap" id="amortWrap">
-                <table class="amort-table" id="amortTable">
-                  <thead><tr><th>#</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
-                  <tbody id="amortBody"></tbody>
-                </table>
-                <button class="show-all-btn" id="showAllBtn" onclick="showAllAmort()" style="display:none">Show All Months</button>
+                <table class="atable" id="amortTbl"><thead><tr><th>#</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody id="amortBdy"></tbody></table>
+                <button class="show-all" id="showAllBtn" onclick="showAllAmort()" style="display:none">Show All Months</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ═══════════ CALC 2: SIP ═══════════ -->
-        <div class="calc-panel" id="panel-sip">
-          <div class="calc-card">
-            <h2 class="calc-title">SIP Investment Calculator</h2>
-            <p class="calc-subtitle">Calculate returns on your monthly investments</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Monthly Investment</span>
-                <span class="field-display" id="sipAmtDisplay">$500</span>
-              </div>
-              <input type="number" class="field-input" id="sipAmount" value="500" min="10" max="100000" oninput="syncSlider('sipAmount','sipAmtSlider');updateSipDisplay();calcSIP()">
-              <input type="range" class="field-slider" id="sipAmtSlider" min="10" max="10000" step="10" value="500" oninput="syncInput('sipAmtSlider','sipAmount');updateSipDisplay();calcSIP()">
+        <!-- ═══ SIP ═══ -->
+        <div class="cpanel" id="panel-sip">
+          <div class="ccard">
+            <h2 class="ctitle">SIP Investment Calculator</h2>
+            <p class="csub">Calculate returns on your monthly investments</p>
+            <div class="fg">
+              <div class="flbl"><span>Monthly Investment</span><span class="fdisp" id="sipAmtD">$500</span></div>
+              <input type="number" class="finp" id="sipAmt" value="500" min="10" max="100000" oninput="sy('sipAmt','sipAmtS');udSip();calcSIP()">
+              <input type="range" class="fslider" id="sipAmtS" min="10" max="10000" step="10" value="500" oninput="si('sipAmtS','sipAmt');udSip();calcSIP()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Expected Annual Return</span>
-                <span class="field-display" id="sipRateDisplay">12% p.a.</span>
-              </div>
-              <input type="number" class="field-input" id="sipRate" value="12" min="1" max="50" step="0.5" oninput="syncSlider('sipRate','sipRateSlider');updateSipDisplay();calcSIP()">
-              <input type="range" class="field-slider" id="sipRateSlider" min="1" max="30" step="0.5" value="12" oninput="syncInput('sipRateSlider','sipRate');updateSipDisplay();calcSIP()">
-              <p class="hint-text">Equity funds avg: 10–15% | Bonds: 5–8% | FD: 3–6%</p>
+            <div class="fg">
+              <div class="flbl"><span>Expected Annual Return</span><span class="fdisp" id="sipRateD">12%</span></div>
+              <input type="number" class="finp" id="sipRate" value="12" min="1" max="50" step="0.5" oninput="sy('sipRate','sipRateS');udSip();calcSIP()">
+              <input type="range" class="fslider" id="sipRateS" min="1" max="30" step="0.5" value="12" oninput="si('sipRateS','sipRate');udSip();calcSIP()">
+              <p class="hint">Equity funds avg: 10–15% | Bonds: 5–8% | FD: 3–6%</p>
             </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Investment Period</span>
-                <span class="field-display" id="sipPeriodDisplay">10 Years</span>
-              </div>
-              <input type="number" class="field-input" id="sipYears" value="10" min="1" max="40" oninput="syncSlider('sipYears','sipYearsSlider');updateSipDisplay();calcSIP()">
-              <input type="range" class="field-slider" id="sipYearsSlider" min="1" max="40" step="1" value="10" oninput="syncInput('sipYearsSlider','sipYears');updateSipDisplay();calcSIP()">
+            <div class="fg">
+              <div class="flbl"><span>Investment Period</span><span class="fdisp" id="sipYrD">10 Years</span></div>
+              <input type="number" class="finp" id="sipYr" value="10" min="1" max="40" oninput="sy('sipYr','sipYrS');udSip();calcSIP()">
+              <input type="range" class="fslider" id="sipYrS" min="1" max="40" step="1" value="10" oninput="si('sipYrS','sipYr');udSip();calcSIP()">
             </div>
+            <div class="fg">
+              <div class="flbl"><span>Investment Frequency</span></div>
+              <select class="finp" id="sipFreq" onchange="calcSIP()"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Annually</option></select>
+            </div>
+            <button class="cbtn" onclick="calcSIP()">Calculate Returns</button>
+            <div class="rbox" id="sipRes">
+              <div class="mgrid">
+                <div class="mcard"><div class="mlbl">Amount Invested</div><div class="mval" id="sipInv">—</div></div>
+                <div class="mcard"><div class="mlbl">Est. Returns</div><div class="mval gr" id="sipRet">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Value</div><div class="mval ac" id="sipTot">—</div></div>
+              </div>
+              <div class="cwrap"><canvas id="sipChart"></canvas>
+                <div class="legend">
+                  <div class="leg-i"><div class="leg-d" style="background:#94a3b8"></div>Invested</div>
+                  <div class="leg-i"><div class="leg-d" style="background:#6366f1"></div>Portfolio Value</div>
+                </div>
+              </div>
+              <div class="wgrid" id="sipWG"></div>
+            </div>
+          </div>
+        </div>
 
-            <div class="field-group">
-              <div class="field-label"><span>Investment Frequency</span></div>
-              <select class="field-input" id="sipFreq" onchange="calcSIP()">
-                <option value="12">Monthly</option>
-                <option value="4">Quarterly</option>
-                <option value="1">Annually</option>
+        <!-- ═══ MORTGAGE ═══ -->
+        <div class="cpanel" id="panel-mortgage">
+          <div class="ccard">
+            <h2 class="ctitle">Mortgage Calculator</h2>
+            <p class="csub">Plan your home loan with full breakdown</p>
+            <div class="fg">
+              <div class="flbl"><span>Home Price</span><span class="fdisp" id="mortPrD">$300,000</span></div>
+              <input type="number" class="finp" id="mortPr" value="300000" min="10000" oninput="sy('mortPr','mortPrS');mortUpdate()">
+              <input type="range" class="fslider" id="mortPrS" min="10000" max="2000000" step="5000" value="300000" oninput="si('mortPrS','mortPr');mortUpdate()">
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Down Payment</span></div>
+              <div class="frow">
+                <input type="number" class="finp" id="mortDA" value="60000" placeholder="Amount" oninput="mortAmtCh()">
+                <input type="number" class="finp" id="mortDP" value="20" min="0" max="100" placeholder="%" oninput="mortPctCh()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Loan Amount (auto)</span></div>
+              <input type="text" class="finp" id="mortLA" readonly style="background:#f8fafc;color:var(--accent);font-weight:700" value="$240,000">
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Annual Interest Rate</span><span class="fdisp" id="mortRateD">6.5%</span></div>
+              <input type="number" class="finp" id="mortRate" value="6.5" min="0.1" max="30" step="0.1" oninput="sy('mortRate','mortRateS');mortUpdate()">
+              <input type="range" class="fslider" id="mortRateS" min="0.5" max="20" step="0.1" value="6.5" oninput="si('mortRateS','mortRate');mortUpdate()">
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Loan Term</span></div>
+              <select class="finp" id="mortTerm" onchange="calcMortgage()"><option value="5">5 Years</option><option value="10">10 Years</option><option value="15">15 Years</option><option value="20">20 Years</option><option value="25">25 Years</option><option value="30" selected>30 Years</option></select>
+            </div>
+            <div class="expwrap">
+              <div class="exphdr" onclick="toggleExp('mortEx')">Additional Costs <span>▼</span></div>
+              <div class="expbdy" id="mortEx">
+                <div class="fg"><div class="flbl"><span>Property Tax (annual)</span></div><input type="number" class="finp" id="mortTax" value="2400" oninput="calcMortgage()"></div>
+                <div class="fg"><div class="flbl"><span>Home Insurance (annual)</span></div><input type="number" class="finp" id="mortIns" value="1200" oninput="calcMortgage()"></div>
+                <div class="fg" style="margin-bottom:0"><div class="flbl"><span>HOA Fees (monthly)</span></div><input type="number" class="finp" id="mortHOA" value="0" oninput="calcMortgage()"></div>
+              </div>
+            </div>
+            <button class="cbtn" onclick="calcMortgage()">Calculate Mortgage</button>
+            <div class="rbox" id="mortRes">
+              <div class="mort-bk">
+                <div class="mort-tot"><div class="mort-tot-lbl">Total Monthly Payment</div><div class="mort-tot-val" id="mortTotM">—</div></div>
+                <div class="mort-ln"><span>Principal &amp; Interest</span><span id="mortPI">—</span></div>
+                <div class="mort-ln"><span>Property Tax</span><span id="mortTaxL">—</span></div>
+                <div class="mort-ln"><span>Home Insurance</span><span id="mortInsL">—</span></div>
+                <div class="mort-ln"><span>HOA Fees</span><span id="mortHOAL">—</span></div>
+                <div class="mort-ln"><span>PMI (if &lt;20% down)</span><span id="mortPMIL">—</span></div>
+              </div>
+              <div class="mgrid">
+                <div class="mcard"><div class="mlbl">Total Cost</div><div class="mval" id="mortTC">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Interest</div><div class="mval" id="mortTI">—</div></div>
+                <div class="mcard"><div class="mlbl">Payoff Date</div><div class="mval" id="mortPO" style="font-size:13px">—</div></div>
+              </div>
+              <div class="cwrap"><canvas id="mortChart"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ SALARY ═══ -->
+        <div class="cpanel" id="panel-salary">
+          <div class="ccard">
+            <h2 class="ctitle">Salary &amp; Take-Home Calculator</h2>
+            <p class="csub">Estimate your net pay after deductions</p>
+            <div class="fg">
+              <div class="flbl"><span>Annual Gross Salary</span><span class="fdisp" id="salAmtD">$60,000</span></div>
+              <input type="number" class="finp" id="salGross" value="60000" min="5000" oninput="sy('salGross','salGrossS');udSal();calcSalary()">
+              <input type="range" class="fslider" id="salGrossS" min="5000" max="500000" step="1000" value="60000" oninput="si('salGrossS','salGross');udSal();calcSalary()">
+            </div>
+            <div class="fg">
+              <div class="flbl"><span>Tax Region</span></div>
+              <select class="finp" id="salReg" onchange="document.getElementById('salCTG').style.display=this.value==='other'?'block':'none';calcSalary()">
+                <option value="us">United States</option><option value="uk">United Kingdom</option><option value="ca">Canada</option><option value="au">Australia</option><option value="eu">European Union</option><option value="in">India</option><option value="uae">UAE (0% tax)</option><option value="other">Other (custom)</option>
               </select>
             </div>
-
-            <button class="calc-btn" onclick="calcSIP()">Calculate Returns</button>
-
-            <div class="result-box show" id="sipResult">
-              <div class="metrics-row">
-                <div class="metric-card">
-                  <div class="metric-label">Amount Invested</div>
-                  <div class="metric-value" id="sipInvested">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Est. Returns</div>
-                  <div class="metric-value success" id="sipReturns">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Total Value</div>
-                  <div class="metric-value accent" id="sipTotal">—</div>
-                </div>
+            <div class="fg" id="salCTG" style="display:none">
+              <div class="flbl"><span>Custom Tax Rate (%)</span></div>
+              <input type="number" class="finp" id="salCT" value="20" min="0" max="70" oninput="calcSalary()">
+            </div>
+            <div class="expwrap">
+              <div class="exphdr" onclick="toggleExp('salEx')">Deductions (Optional) <span>▼</span></div>
+              <div class="expbdy" id="salEx">
+                <div class="fg"><div class="flbl"><span>Pension/401k (%)</span></div><input type="number" class="finp" id="salPen" value="5" min="0" max="50" oninput="calcSalary()"></div>
+                <div class="fg"><div class="flbl"><span>Health Insurance (monthly)</span></div><input type="number" class="finp" id="salHlth" value="200" min="0" oninput="calcSalary()"></div>
+                <div class="fg" style="margin-bottom:0"><div class="flbl"><span>Other Pre-tax Deductions</span></div><input type="number" class="finp" id="salOth" value="0" min="0" oninput="calcSalary()"></div>
               </div>
-              <div class="chart-wrap">
-                <canvas id="sipChart" width="560" height="240"></canvas>
-                <div class="chart-legend">
-                  <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>Amount Invested</div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Portfolio Value</div>
-                </div>
+            </div>
+            <button class="cbtn" onclick="calcSalary()">Calculate Take-Home Pay</button>
+            <div class="rbox" id="salRes">
+              <div class="ptabs">
+                <button class="ptab active" onclick="showPay('annual',this)">Annual</button>
+                <button class="ptab" onclick="showPay('monthly',this)">Monthly</button>
+                <button class="ptab" onclick="showPay('biweekly',this)">Bi-weekly</button>
+                <button class="ptab" onclick="showPay('weekly',this)">Weekly</button>
               </div>
-              <div class="wealth-grid" id="sipWealthGrid"></div>
+              <div class="sal-bk" id="salBK"></div>
+              <div class="cwrap"><canvas id="salDonut"></canvas><div class="legend" id="salLeg"></div></div>
             </div>
           </div>
         </div>
 
-        <!-- ═══════════ CALC 3: MORTGAGE ═══════════ -->
-        <div class="calc-panel" id="panel-mortgage">
-          <div class="calc-card">
-            <h2 class="calc-title">Mortgage Calculator</h2>
-            <p class="calc-subtitle">Plan your home loan with full breakdown</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Home Price</span>
-                <span class="field-display" id="mortPriceDisplay">$300,000</span>
-              </div>
-              <input type="number" class="field-input" id="mortPrice" value="300000" min="10000" max="50000000" oninput="syncSlider('mortPrice','mortPriceSlider');updateMortgageCalc()">
-              <input type="range" class="field-slider" id="mortPriceSlider" min="10000" max="2000000" step="5000" value="300000" oninput="syncInput('mortPriceSlider','mortPrice');updateMortgageCalc()">
+        <!-- ═══ FD ═══ -->
+        <div class="cpanel" id="panel-fd">
+          <div class="ccard">
+            <h2 class="ctitle">Fixed Deposit / CD Calculator</h2>
+            <p class="csub">Calculate maturity amount on your savings</p>
+            <div class="fg">
+              <div class="flbl"><span>Principal Amount</span><span class="fdisp" id="fdAmtD">$10,000</span></div>
+              <input type="number" class="finp" id="fdAmt" value="10000" min="100" oninput="sy('fdAmt','fdAmtS');udFd();calcFD()">
+              <input type="range" class="fslider" id="fdAmtS" min="100" max="500000" step="100" value="10000" oninput="si('fdAmtS','fdAmt');udFd();calcFD()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Down Payment</span></div>
-              <div class="field-row">
-                <div>
-                  <input type="number" class="field-input" id="mortDownAmt" value="60000" placeholder="Amount" oninput="mortDownAmtChanged()">
-                </div>
-                <div>
-                  <input type="number" class="field-input" id="mortDownPct" value="20" min="0" max="100" step="1" placeholder="%" oninput="mortDownPctChanged()">
-                </div>
-              </div>
+            <div class="fg">
+              <div class="flbl"><span>Annual Interest Rate</span><span class="fdisp" id="fdRateD">5.5%</span></div>
+              <input type="number" class="finp" id="fdRate" value="5.5" min="0.1" max="30" step="0.1" oninput="sy('fdRate','fdRateS');udFd();calcFD()">
+              <input type="range" class="fslider" id="fdRateS" min="0.1" max="20" step="0.1" value="5.5" oninput="si('fdRateS','fdRate');udFd();calcFD()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Loan Amount (auto-calculated)</span></div>
-              <input type="text" class="field-input" id="mortLoanAmt" readonly style="background:#f8fafc;color:var(--accent);font-weight:700" value="$240,000">
+            <div class="fg">
+              <div class="flbl"><span>Duration</span><span class="fdisp" id="fdDurD">3 Years</span></div>
+              <div class="tog" style="margin-bottom:8px">
+                <button class="togbtn active" id="fdYB" onclick="setFdMode('years')">Years</button>
+                <button class="togbtn" id="fdMB" onclick="setFdMode('months')">Months</button>
+              </div>
+              <input type="number" class="finp" id="fdDur" value="3" min="1" max="30" oninput="sy('fdDur','fdDurS');udFd();calcFD()">
+              <input type="range" class="fslider" id="fdDurS" min="1" max="30" step="1" value="3" oninput="si('fdDurS','fdDur');udFd();calcFD()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Annual Interest Rate</span>
-                <span class="field-display" id="mortRateDisplay">6.5%</span>
-              </div>
-              <input type="number" class="field-input" id="mortRate" value="6.5" min="0.1" max="30" step="0.1" oninput="syncSlider('mortRate','mortRateSlider');updateMortgageCalc()">
-              <input type="range" class="field-slider" id="mortRateSlider" min="0.5" max="20" step="0.1" value="6.5" oninput="syncInput('mortRateSlider','mortRate');updateMortgageCalc()">
+            <div class="fg">
+              <div class="flbl"><span>Compounding Frequency</span></div>
+              <select class="finp" id="fdComp" onchange="calcFD()"><option value="1">Annually</option><option value="2">Semi-Annually</option><option value="4" selected>Quarterly</option><option value="12">Monthly</option><option value="365">Daily</option></select>
             </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Loan Term</span></div>
-              <select class="field-input" id="mortTerm" onchange="updateMortgageCalc()">
-                <option value="5">5 Years</option>
-                <option value="10">10 Years</option>
-                <option value="15">15 Years</option>
-                <option value="20">20 Years</option>
-                <option value="25">25 Years</option>
-                <option value="30" selected>30 Years</option>
-              </select>
-            </div>
-
-            <div class="expandable-section">
-              <div class="expandable-header" onclick="toggleExpand('mortExtras')">
-                Additional Monthly Costs <span>▼</span>
+            <button class="cbtn" onclick="calcFD()">Calculate Maturity</button>
+            <div class="rbox" id="fdRes">
+              <div class="mgrid">
+                <div class="mcard"><div class="mlbl">Maturity Amount</div><div class="mval ac" id="fdMat">—</div></div>
+                <div class="mcard"><div class="mlbl">Interest Earned</div><div class="mval gr" id="fdInt">—</div></div>
+                <div class="mcard"><div class="mlbl">Effective Rate</div><div class="mval" id="fdEff">—</div></div>
               </div>
-              <div class="expandable-body" id="mortExtras">
-                <div class="field-group">
-                  <div class="field-label"><span>Property Tax (annual)</span></div>
-                  <input type="number" class="field-input" id="mortTax" value="2400" oninput="updateMortgageCalc()">
-                </div>
-                <div class="field-group">
-                  <div class="field-label"><span>Home Insurance (annual)</span></div>
-                  <input type="number" class="field-input" id="mortInsurance" value="1200" oninput="updateMortgageCalc()">
-                </div>
-                <div class="field-group" style="margin-bottom:0">
-                  <div class="field-label"><span>HOA Fees (monthly)</span></div>
-                  <input type="number" class="field-input" id="mortHOA" value="0" oninput="updateMortgageCalc()">
-                </div>
-              </div>
-            </div>
-
-            <button class="calc-btn" onclick="calcMortgage()">Calculate Mortgage</button>
-
-            <div class="result-box show" id="mortResult">
-              <div class="mortgage-breakdown">
-                <div class="mortgage-total">
-                  <span class="mortgage-total-label">Total Monthly Payment</span>
-                  <span class="mortgage-total-value" id="mortTotalMonthly">—</span>
-                </div>
-                <div class="mortgage-line"><span class="mortgage-line-label">Principal &amp; Interest</span><span class="mortgage-line-value" id="mortPI">—</span></div>
-                <div class="mortgage-line"><span class="mortgage-line-label">Property Tax</span><span class="mortgage-line-value" id="mortTaxLine">—</span></div>
-                <div class="mortgage-line"><span class="mortgage-line-label">Home Insurance</span><span class="mortgage-line-value" id="mortInsLine">—</span></div>
-                <div class="mortgage-line"><span class="mortgage-line-label">HOA Fees</span><span class="mortgage-line-value" id="mortHOALine">—</span></div>
-                <div class="mortgage-line"><span class="mortgage-line-label">PMI (if &lt;20% down)</span><span class="mortgage-line-value" id="mortPMILine">—</span></div>
-              </div>
-              <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
-                <div class="metric-card"><div class="metric-label">Total Cost</div><div class="metric-value" id="mortTotalCost">—</div></div>
-                <div class="metric-card"><div class="metric-label">Total Interest</div><div class="metric-value" id="mortTotalInt">—</div></div>
-                <div class="metric-card"><div class="metric-label">Payoff Date</div><div class="metric-value" id="mortPayoff" style="font-size:14px">—</div></div>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="mortChart" width="400" height="200"></canvas>
-              </div>
+              <div class="cwrap"><canvas id="fdDonut"></canvas><div class="legend"><div class="leg-i"><div class="leg-d" style="background:#6366f1"></div>Principal</div><div class="leg-i"><div class="leg-d" style="background:#10b981"></div>Interest</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- ═══════════ CALC 4: SALARY ═══════════ -->
-        <div class="calc-panel" id="panel-salary">
-          <div class="calc-card">
-            <h2 class="calc-title">Salary &amp; Take-Home Calculator</h2>
-            <p class="calc-subtitle">Estimate your net pay after deductions</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Annual Gross Salary</span>
-                <span class="field-display" id="salAmtDisplay">$60,000</span>
-              </div>
-              <input type="number" class="field-input" id="salGross" value="60000" min="5000" max="10000000" oninput="syncSlider('salGross','salGrossSlider');updateSalDisplay();calcSalary()">
-              <input type="range" class="field-slider" id="salGrossSlider" min="5000" max="500000" step="1000" value="60000" oninput="syncInput('salGrossSlider','salGross');updateSalDisplay();calcSalary()">
+        <!-- ═══ COMPOUND ═══ -->
+        <div class="cpanel" id="panel-compound">
+          <div class="ccard">
+            <h2 class="ctitle">Compound Interest Calculator</h2>
+            <p class="csub">See the power of compounding over time</p>
+            <div class="fg">
+              <div class="flbl"><span>Initial Investment</span><span class="fdisp" id="ciAmtD">$5,000</span></div>
+              <input type="number" class="finp" id="ciAmt" value="5000" min="0" oninput="sy('ciAmt','ciAmtS');udCi();calcCI()">
+              <input type="range" class="fslider" id="ciAmtS" min="0" max="500000" step="500" value="5000" oninput="si('ciAmtS','ciAmt');udCi();calcCI()">
             </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Tax Region</span></div>
-              <select class="field-input" id="salRegion" onchange="calcSalary()">
-                <option value="us">United States</option>
-                <option value="uk">United Kingdom</option>
-                <option value="ca">Canada</option>
-                <option value="au">Australia</option>
-                <option value="eu">European Union (avg)</option>
-                <option value="in">India</option>
-                <option value="uae">UAE (0% tax)</option>
-                <option value="other">Other (custom rate)</option>
-              </select>
+            <div class="fg">
+              <div class="flbl"><span>Monthly Contribution</span><span class="fdisp" id="ciConD">$200/mo</span></div>
+              <input type="number" class="finp" id="ciCon" value="200" min="0" oninput="sy('ciCon','ciConS');udCi();calcCI()">
+              <input type="range" class="fslider" id="ciConS" min="0" max="10000" step="50" value="200" oninput="si('ciConS','ciCon');udCi();calcCI()">
             </div>
-
-            <div class="field-group" id="customTaxGroup" style="display:none">
-              <div class="field-label"><span>Custom Tax Rate (%)</span></div>
-              <input type="number" class="field-input" id="salCustomTax" value="20" min="0" max="70" oninput="calcSalary()">
+            <div class="fg">
+              <div class="flbl"><span>Annual Interest Rate</span><span class="fdisp" id="ciRateD">8%</span></div>
+              <input type="number" class="finp" id="ciRate" value="8" min="0.1" max="50" step="0.5" oninput="sy('ciRate','ciRateS');udCi();calcCI()">
+              <input type="range" class="fslider" id="ciRateS" min="0.1" max="30" step="0.5" value="8" oninput="si('ciRateS','ciRate');udCi();calcCI()">
             </div>
-
-            <div class="expandable-section">
-              <div class="expandable-header" onclick="toggleExpand('salExtras')">
-                Deductions (Optional) <span>▼</span>
-              </div>
-              <div class="expandable-body" id="salExtras">
-                <div class="field-group">
-                  <div class="field-label"><span>Pension / 401k Contribution (%)</span></div>
-                  <input type="number" class="field-input" id="salPension" value="5" min="0" max="50" oninput="calcSalary()">
-                </div>
-                <div class="field-group">
-                  <div class="field-label"><span>Health Insurance (monthly)</span></div>
-                  <input type="number" class="field-input" id="salHealth" value="200" min="0" oninput="calcSalary()">
-                </div>
-                <div class="field-group" style="margin-bottom:0">
-                  <div class="field-label"><span>Other Pre-tax Deductions (annual)</span></div>
-                  <input type="number" class="field-input" id="salOther" value="0" min="0" oninput="calcSalary()">
-                </div>
-              </div>
+            <div class="fg">
+              <div class="flbl"><span>Duration (Years)</span><span class="fdisp" id="ciYrD">10 Years</span></div>
+              <input type="number" class="finp" id="ciYr" value="10" min="1" max="50" oninput="sy('ciYr','ciYrS');udCi();calcCI()">
+              <input type="range" class="fslider" id="ciYrS" min="1" max="50" step="1" value="10" oninput="si('ciYrS','ciYr');udCi();calcCI()">
             </div>
-
-            <button class="calc-btn" onclick="calcSalary()">Calculate Take-Home Pay</button>
-
-            <div class="result-box show" id="salResult">
-              <div class="pay-tabs">
-                <button class="pay-tab active" onclick="showPayTab('annual',this)">Annual</button>
-                <button class="pay-tab" onclick="showPayTab('monthly',this)">Monthly</button>
-                <button class="pay-tab" onclick="showPayTab('biweekly',this)">Bi-weekly</button>
-                <button class="pay-tab" onclick="showPayTab('weekly',this)">Weekly</button>
+            <div class="fg">
+              <div class="flbl"><span>Compound Frequency</span></div>
+              <select class="finp" id="ciFreq" onchange="calcCI()"><option value="1">Annually</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option><option value="365">Daily</option></select>
+            </div>
+            <button class="cbtn" onclick="calcCI()">Calculate Growth</button>
+            <div class="rbox" id="ciRes">
+              <div class="mgrid">
+                <div class="mcard"><div class="mlbl">Final Balance</div><div class="mval ac" id="ciFin">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Contributed</div><div class="mval" id="ciCont">—</div></div>
+                <div class="mcard"><div class="mlbl">Total Interest</div><div class="mval gr" id="ciIntv">—</div></div>
+                <div class="mcard"><div class="mlbl">Return on Investment</div><div class="mval" id="ciROI">—</div></div>
               </div>
-              <div class="salary-breakdown" id="salBreakdown"></div>
-              <div class="chart-wrap">
-                <canvas id="salDonut" width="220" height="220"></canvas>
-                <div class="chart-legend" id="salLegend"></div>
-              </div>
+              <div class="cwrap"><canvas id="ciChart"></canvas><div class="legend"><div class="leg-i"><div class="leg-d" style="background:#94a3b8"></div>Contributed</div><div class="leg-i"><div class="leg-d" style="background:#6366f1"></div>Total Value</div></div></div>
             </div>
           </div>
         </div>
+      </div><!-- /left -->
 
-        <!-- ═══════════ CALC 5: FIXED DEPOSIT ═══════════ -->
-        <div class="calc-panel" id="panel-fd">
-          <div class="calc-card">
-            <h2 class="calc-title">Fixed Deposit / CD Calculator</h2>
-            <p class="calc-subtitle">Calculate maturity amount on your savings</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Principal Amount</span>
-                <span class="field-display" id="fdAmtDisplay">$10,000</span>
-              </div>
-              <input type="number" class="field-input" id="fdPrincipal" value="10000" min="100" oninput="syncSlider('fdPrincipal','fdPrincipalSlider');updateFdDisplay();calcFD()">
-              <input type="range" class="field-slider" id="fdPrincipalSlider" min="100" max="500000" step="100" value="10000" oninput="syncInput('fdPrincipalSlider','fdPrincipal');updateFdDisplay();calcFD()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Annual Interest Rate</span>
-                <span class="field-display" id="fdRateDisplay">5.5%</span>
-              </div>
-              <input type="number" class="field-input" id="fdRate" value="5.5" min="0.1" max="30" step="0.1" oninput="syncSlider('fdRate','fdRateSlider');updateFdDisplay();calcFD()">
-              <input type="range" class="field-slider" id="fdRateSlider" min="0.1" max="20" step="0.1" value="5.5" oninput="syncInput('fdRateSlider','fdRate');updateFdDisplay();calcFD()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Duration</span>
-                <span class="field-display" id="fdDurDisplay">3 Years</span>
-              </div>
-              <div class="toggle-wrap" style="margin-bottom:10px">
-                <button class="toggle-btn active" id="fdYrBtn" onclick="setFdMode('years')">Years</button>
-                <button class="toggle-btn" id="fdMoBtn" onclick="setFdMode('months')">Months</button>
-              </div>
-              <input type="number" class="field-input" id="fdDuration" value="3" min="1" max="30" oninput="syncSlider('fdDuration','fdDurationSlider');updateFdDisplay();calcFD()">
-              <input type="range" class="field-slider" id="fdDurationSlider" min="1" max="30" step="1" value="3" oninput="syncInput('fdDurationSlider','fdDuration');updateFdDisplay();calcFD()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Compounding Frequency</span></div>
-              <select class="field-input" id="fdCompound" onchange="calcFD()">
-                <option value="1">Annually</option>
-                <option value="2">Semi-Annually</option>
-                <option value="4" selected>Quarterly</option>
-                <option value="12">Monthly</option>
-                <option value="365">Daily</option>
-              </select>
-            </div>
-
-            <button class="calc-btn" onclick="calcFD()">Calculate Maturity</button>
-
-            <div class="result-box show" id="fdResult">
-              <div class="metrics-row">
-                <div class="metric-card">
-                  <div class="metric-label">Maturity Amount</div>
-                  <div class="metric-value accent" id="fdMaturity">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Interest Earned</div>
-                  <div class="metric-value success" id="fdInterest">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Effective Rate</div>
-                  <div class="metric-value" id="fdEffRate">—</div>
-                </div>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="fdDonut" width="220" height="220"></canvas>
-                <div class="chart-legend">
-                  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Principal</div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Interest</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ═══════════ CALC 6: COMPOUND INTEREST ═══════════ -->
-        <div class="calc-panel" id="panel-compound">
-          <div class="calc-card">
-            <h2 class="calc-title">Compound Interest Calculator</h2>
-            <p class="calc-subtitle">See the power of compounding over time</p>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Initial Investment</span>
-                <span class="field-display" id="ciAmtDisplay">$5,000</span>
-              </div>
-              <input type="number" class="field-input" id="ciPrincipal" value="5000" min="0" oninput="syncSlider('ciPrincipal','ciPrincipalSlider');updateCiDisplay();calcCI()">
-              <input type="range" class="field-slider" id="ciPrincipalSlider" min="0" max="500000" step="500" value="5000" oninput="syncInput('ciPrincipalSlider','ciPrincipal');updateCiDisplay();calcCI()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Monthly Contribution</span>
-                <span class="field-display" id="ciContribDisplay">$200/mo</span>
-              </div>
-              <input type="number" class="field-input" id="ciContrib" value="200" min="0" oninput="syncSlider('ciContrib','ciContribSlider');updateCiDisplay();calcCI()">
-              <input type="range" class="field-slider" id="ciContribSlider" min="0" max="10000" step="50" value="200" oninput="syncInput('ciContribSlider','ciContrib');updateCiDisplay();calcCI()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Annual Interest Rate</span>
-                <span class="field-display" id="ciRateDisplay">8%</span>
-              </div>
-              <input type="number" class="field-input" id="ciRate" value="8" min="0.1" max="50" step="0.5" oninput="syncSlider('ciRate','ciRateSlider');updateCiDisplay();calcCI()">
-              <input type="range" class="field-slider" id="ciRateSlider" min="0.1" max="30" step="0.5" value="8" oninput="syncInput('ciRateSlider','ciRate');updateCiDisplay();calcCI()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">
-                <span>Duration (Years)</span>
-                <span class="field-display" id="ciYearsDisplay">10 Years</span>
-              </div>
-              <input type="number" class="field-input" id="ciYears" value="10" min="1" max="50" oninput="syncSlider('ciYears','ciYearsSlider');updateCiDisplay();calcCI()">
-              <input type="range" class="field-slider" id="ciYearsSlider" min="1" max="50" step="1" value="10" oninput="syncInput('ciYearsSlider','ciYears');updateCiDisplay();calcCI()">
-            </div>
-
-            <div class="field-group">
-              <div class="field-label"><span>Compound Frequency</span></div>
-              <select class="field-input" id="ciFreq" onchange="calcCI()">
-                <option value="1">Annually</option>
-                <option value="4">Quarterly</option>
-                <option value="12" selected>Monthly</option>
-                <option value="365">Daily</option>
-              </select>
-            </div>
-
-            <button class="calc-btn" onclick="calcCI()">Calculate Growth</button>
-
-            <div class="result-box show" id="ciResult">
-              <div class="metrics-row" style="grid-template-columns:repeat(2,1fr)">
-                <div class="metric-card">
-                  <div class="metric-label">Final Balance</div>
-                  <div class="metric-value accent" id="ciFinal">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Total Contributed</div>
-                  <div class="metric-value" id="ciContributed">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Total Interest</div>
-                  <div class="metric-value success" id="ciInterest">—</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Return on Investment</div>
-                  <div class="metric-value" id="ciROI">—</div>
-                </div>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="ciChart" width="560" height="260"></canvas>
-                <div class="chart-legend">
-                  <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>Amount Contributed</div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Total Value (with compound)</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /left col -->
-
-      <!-- RIGHT SIDEBAR -->
+      <!-- SIDEBAR -->
       <div class="sidebar">
-        <div class="ad-zone ad-sidebar"><span>📢 AdSense 300×250</span></div>
-
-        <div class="sidebar-card">
+        <div class="ad-zone ad-side">📢 AdSense 300×250</div>
+        <div class="scard">
           <h3>Why Choose FinCalc?</h3>
-          <ul class="why-list">
-            <li>Works in 30+ currencies</li>
-            <li>No account or login needed</li>
-            <li>100% free, always</li>
-            <li>Instant real-time results</li>
-            <li>Mobile &amp; tablet friendly</li>
-            <li>No data stored or tracked</li>
+          <ul class="wl">
+            <li>Works in 30+ currencies</li><li>No login needed</li><li>100% free, always</li>
+            <li>Instant real-time results</li><li>Mobile &amp; tablet friendly</li><li>No data stored</li>
           </ul>
         </div>
-
-        <div class="sidebar-card">
+        <div class="scard">
           <h3>More Calculators</h3>
-          <ul class="quick-links">
+          <ul class="ql">
             <li><a href="#" onclick="switchTab('emi');return false">Loan EMI Calculator</a></li>
             <li><a href="#" onclick="switchTab('sip');return false">SIP &amp; Investment</a></li>
             <li><a href="#" onclick="switchTab('mortgage');return false">Mortgage Calculator</a></li>
@@ -884,808 +629,414 @@ footer{background:var(--primary);color:rgba(255,255,255,0.75);padding:56px 0 0}
             <li><a href="#" onclick="switchTab('compound');return false">Compound Interest</a></li>
           </ul>
         </div>
-
-        <div class="sidebar-card">
+        <div class="scard">
           <h3>Selected Currency</h3>
-          <div class="currency-info-display">
-            <div class="currency-flag" id="sidebarFlag">🇺🇸</div>
-            <div class="currency-info-text">
-              <div class="currency-info-name" id="sidebarCurrName">US Dollar</div>
-              <div class="currency-info-sym" id="sidebarCurrSym">USD — $</div>
-            </div>
-          </div>
-          <p class="currency-note" id="sidebarCurrNote">All calculations shown in US Dollar</p>
+          <div class="cur-disp"><div class="cur-flag" id="sbFlag">🇺🇸</div><div><div class="cur-name" id="sbName">US Dollar</div><div class="cur-code" id="sbCode">USD — $</div></div></div>
+          <p class="cur-note" id="sbNote">All calculations shown in US Dollar</p>
         </div>
-
-        <div class="ad-zone ad-sidebar-tall"><span>📢 AdSense 300×600</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-sub">Get your financial answer in 3 simple steps</p>
+<section class="how-sec">
+  <div class="wrap">
+    <div class="sec-hdr">
+      <div class="sec-lbl">How It Works</div>
+      <h2>3 Simple Steps</h2>
+      <p>Get your financial answer instantly</p>
     </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-icon">📊</div>
-        <div class="step-num">Step 1</div>
-        <h3 class="step-title">Choose Your Calculator</h3>
-        <p class="step-desc">Pick from 6 free tools — EMI, SIP, Mortgage, Salary, Fixed Deposit, or Compound Interest.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-icon">⚡</div>
-        <div class="step-num">Step 2</div>
-        <h3 class="step-title">Enter Your Numbers</h3>
-        <p class="step-desc">Fill in the simple form fields. Use sliders for quick adjustments. Select your currency.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-icon">📋</div>
-        <div class="step-num">Step 3</div>
-        <h3 class="step-title">Get Instant Results</h3>
-        <p class="step-desc">See a detailed breakdown with charts and tables — instantly, with no loading or waiting.</p>
-      </div>
+    <div class="steps">
+      <div class="step-c"><div class="step-ic">📊</div><div class="step-nm">Step 1</div><h3>Choose Calculator</h3><p>Pick from 6 free tools for EMI, SIP, Mortgage, Salary and more.</p></div>
+      <div class="step-c"><div class="step-ic">⚡</div><div class="step-nm">Step 2</div><h3>Enter Numbers</h3><p>Fill in the simple fields. Use sliders for quick adjustments.</p></div>
+      <div class="step-c"><div class="step-ic">📋</div><div class="step-nm">Step 3</div><h3>Get Results</h3><p>See detailed breakdown with charts — instantly, no waiting.</p></div>
     </div>
   </div>
 </section>
 
-<!-- STATS STRIP -->
-<section class="stats-strip">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item"><div class="stat-num" data-target="150" data-suffix="+">0</div><div class="stat-label">🌍 Countries</div></div>
-      <div class="stat-item"><div class="stat-num" data-target="6">0</div><div class="stat-label">⚡ Calculators</div></div>
-      <div class="stat-item"><div class="stat-num" data-target="500" data-suffix="K+">0</div><div class="stat-label">👥 Users</div></div>
-      <div class="stat-item"><div class="stat-num" data-target="100" data-suffix="% Free">0</div><div class="stat-label">💯 Always Free</div></div>
+<!-- STATS -->
+<section class="stats-sec">
+  <div class="wrap">
+    <div class="sgrid">
+      <div class="sitem"><div class="snum" data-target="150" data-suffix="+">0</div><div class="slbl">🌍 Countries</div></div>
+      <div class="sitem"><div class="snum" data-target="6">0</div><div class="slbl">⚡ Calculators</div></div>
+      <div class="sitem"><div class="snum" data-target="500" data-suffix="K+">0</div><div class="slbl">👥 Users</div></div>
+      <div class="sitem"><div class="snum" data-target="100" data-suffix="% Free">0</div><div class="slbl">💯 Always Free</div></div>
     </div>
   </div>
 </section>
 
-<!-- BOTTOM AD -->
-<div class="container">
-  <div class="ad-zone ad-bottom">
-    <span class="ad-label">📢 Advertisement — Google AdSense 728×90</span>
-  </div>
-</div>
+<!-- BOT AD -->
+<div class="wrap"><div class="ad-zone ad-bot">📢 Advertisement — Google AdSense 728×90</div></div>
 
 <!-- FAQ -->
-<section class="faq-section">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-    </div>
+<section class="faq-sec">
+  <div class="wrap">
+    <div class="sec-hdr"><h2>Frequently Asked Questions</h2></div>
     <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What is EMI and how is it calculated? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">EMI (Equated Monthly Installment) is a fixed payment made to a lender on a set date each month. The formula is: <code>EMI = P × r × (1+r)^n ÷ [(1+r)^n − 1]</code> where P = principal, r = monthly interest rate, and n = total number of months.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What currency does FinCalc use? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">FinCalc supports 30+ global currencies. Use the currency selector in the header to switch between them. All results update instantly without any page reload. Your preference is saved for future visits.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">Is FinCalc free to use? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">Yes, completely free. No signup, no subscription, no hidden fees. All 6 calculators are free forever. FinCalc is supported by non-intrusive display advertising.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">How accurate are the calculations? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">FinCalc uses standard financial formulas used by banks and financial institutions worldwide. Results are accurate for planning and estimation purposes. Always consult a qualified financial advisor before making final financial decisions.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">What is the difference between EMI and mortgage? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">Both are loan repayment structures. EMI is a general term used for any loan repayment. Mortgage specifically refers to home loans with property as collateral. Our mortgage calculator goes further by adding property insurance, taxes, HOA fees, and PMI for a complete monthly cost picture.</div></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">Can I use FinCalc on my phone? <span class="faq-arrow">▼</span></div>
-        <div class="faq-a"><div class="faq-a-inner">Yes! FinCalc is fully mobile-responsive and tested across all screen sizes — from small phones (375px) to tablets and large desktops. All calculators, sliders, charts, and tables work perfectly on touch devices.</div></div>
-      </div>
+      <div class="fq"><div class="fqq" onclick="toggleFaq(this)">What is EMI and how is it calculated?<span class="farr">▼</span></div><div class="fqa"><div class="fqa-in">EMI = Fixed monthly payment to a lender. Formula: <code>EMI = P × r × (1+r)^n ÷ [(1+r)^n − 1]</code> where P = principal, r = monthly rate, n = months.</div></div></div>
+      <div class="fq"><div class="fqq" onclick="toggleFaq(this)">What currency does FinCalc use?<span class="farr">▼</span></div><div class="fqa"><div class="fqa-in">FinCalc supports 30+ currencies. Use the selector in the header. All results update instantly without page reload.</div></div></div>
+      <div class="fq"><div class="fqq" onclick="toggleFaq(this)">Is FinCalc free to use?<span class="farr">▼</span></div><div class="fqa"><div class="fqa-in">Yes, 100% free. No signup, no subscription, no hidden fees. All 6 calculators are free forever.</div></div></div>
+      <div class="fq"><div class="fqq" onclick="toggleFaq(this)">How accurate are the calculations?<span class="farr">▼</span></div><div class="fqa"><div class="fqa-in">FinCalc uses standard financial formulas used by banks worldwide. Always consult a financial advisor for final decisions.</div></div></div>
+      <div class="fq"><div class="fqq" onclick="toggleFaq(this)">Can I use FinCalc on my phone?<span class="farr">▼</span></div><div class="fqa"><div class="fqa-in">Yes! Fully mobile-responsive. Works on all screen sizes — phones, tablets, and desktops.</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="logo-text footer-logo">Fin<span>Calc</span></span>
-        <p class="footer-tagline">Smart financial calculators for everyone, everywhere. Free, fast, and always accurate.</p>
-        <div class="social-icons">
-          <a class="social-icon" href="#" aria-label="Twitter">𝕏</a>
-          <a class="social-icon" href="#" aria-label="LinkedIn">in</a>
-          <a class="social-icon" href="#" aria-label="Facebook">f</a>
-          <a class="social-icon" href="#" aria-label="YouTube">▶</a>
-        </div>
-      </div>
-      <div>
-        <h4>Calculators</h4>
-        <ul class="footer-links">
-          <li><a href="#" onclick="switchTab('emi');return false">Loan EMI Calculator</a></li>
-          <li><a href="#" onclick="switchTab('sip');return false">SIP Investment</a></li>
-          <li><a href="#" onclick="switchTab('mortgage');return false">Mortgage Calculator</a></li>
-          <li><a href="#" onclick="switchTab('salary');return false">Salary Calculator</a></li>
-          <li><a href="#" onclick="switchTab('fd');return false">Fixed Deposit</a></li>
-          <li><a href="#" onclick="switchTab('compound');return false">Compound Interest</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Company</h4>
-        <ul class="footer-links">
-          <li><a href="about.html">About FinCalc</a></li>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="disclaimer.html">Disclaimer</a></li>
-          <li><a href="disclaimer.html">Terms of Use</a></li>
-          <li><a href="about.html#contact">Contact Us</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Available In</h4>
-        <div class="currency-flags-grid">
-          <span class="currency-flag-item" title="USD">🇺🇸</span>
-          <span class="currency-flag-item" title="GBP">🇬🇧</span>
-          <span class="currency-flag-item" title="EUR">🇪🇺</span>
-          <span class="currency-flag-item" title="INR">🇮🇳</span>
-          <span class="currency-flag-item" title="AED">🇦🇪</span>
-          <span class="currency-flag-item" title="CAD">🇨🇦</span>
-          <span class="currency-flag-item" title="AUD">🇦🇺</span>
-          <span class="currency-flag-item" title="SGD">🇸🇬</span>
-          <span class="currency-flag-item" title="JPY">🇯🇵</span>
-          <span class="currency-flag-item" title="BRL">🇧🇷</span>
-          <span class="currency-flag-item" title="ZAR">🇿🇦</span>
-          <span class="currency-flag-item" title="MYR">🇲🇾</span>
-        </div>
-        <p class="footer-more">+18 more currencies →</p>
-      </div>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><span class="flogo">Fin<span>Calc</span></span><p class="ftag">Smart financial calculators for everyone, everywhere.</p><div class="ficons"><a class="ficon" href="#">𝕏</a><a class="ficon" href="#">in</a><a class="ficon" href="#">f</a><a class="ficon" href="#">▶</a></div></div>
+      <div><div class="fh4">Calculators</div><ul class="flinks"><li><a href="#" onclick="switchTab('emi');return false">Loan EMI</a></li><li><a href="#" onclick="switchTab('sip');return false">SIP Investment</a></li><li><a href="#" onclick="switchTab('mortgage');return false">Mortgage</a></li><li><a href="#" onclick="switchTab('salary');return false">Salary</a></li><li><a href="#" onclick="switchTab('fd');return false">Fixed Deposit</a></li><li><a href="#" onclick="switchTab('compound');return false">Compound Interest</a></li></ul></div>
+      <div><div class="fh4">Company</div><ul class="flinks"><li><a href="about.html">About FinCalc</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="disclaimer.html">Disclaimer</a></li><li><a href="about.html#contact">Contact Us</a></li></ul></div>
+      <div><div class="fh4">Available In</div><div class="flagsgrid">🇺🇸 🇬🇧 🇪🇺 🇮🇳 🇦🇪 🇨🇦 🇦🇺 🇸🇬 🇯🇵 🇧🇷 🇿🇦 🇲🇾</div><p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:6px">+18 more currencies</p></div>
     </div>
-    <div class="footer-bar">
-      <span>© 2026 FinCalc. All rights reserved.</span>
-      <span>Results are for informational purposes only. Not financial advice.</span>
-    </div>
+    <div class="fbar"><span>© 2026 FinCalc. All rights reserved.</span><span>Results for informational purposes only.</span></div>
   </div>
 </footer>
 
 <script>
-// ══════════════════════════════════
-// CURRENCY DATA
-// ══════════════════════════════════
-const CURRENCIES = [
+// ── CURRENCIES
+const CURR=[
   {code:'USD',sym:'$',flag:'🇺🇸',name:'US Dollar',locale:'en-US'},
   {code:'EUR',sym:'€',flag:'🇪🇺',name:'Euro',locale:'de-DE'},
   {code:'GBP',sym:'£',flag:'🇬🇧',name:'British Pound',locale:'en-GB'},
   {code:'INR',sym:'₹',flag:'🇮🇳',name:'Indian Rupee',locale:'en-IN'},
-  {code:'AED',sym:'د.إ',flag:'🇦🇪',name:'UAE Dirham',locale:'ar-AE'},
-  {code:'SAR',sym:'﷼',flag:'🇸🇦',name:'Saudi Riyal',locale:'ar-SA'},
+  {code:'AED',sym:'د.إ',flag:'🇦🇪',name:'UAE Dirham',locale:'en-US'},
+  {code:'SAR',sym:'﷼',flag:'🇸🇦',name:'Saudi Riyal',locale:'en-US'},
   {code:'CAD',sym:'CA$',flag:'🇨🇦',name:'Canadian Dollar',locale:'en-CA'},
   {code:'AUD',sym:'A$',flag:'🇦🇺',name:'Australian Dollar',locale:'en-AU'},
   {code:'SGD',sym:'S$',flag:'🇸🇬',name:'Singapore Dollar',locale:'en-SG'},
-  {code:'MYR',sym:'RM',flag:'🇲🇾',name:'Malaysian Ringgit',locale:'ms-MY'},
-  {code:'PKR',sym:'₨',flag:'🇵🇰',name:'Pakistani Rupee',locale:'en-PK'},
-  {code:'BDT',sym:'৳',flag:'🇧🇩',name:'Bangladeshi Taka',locale:'bn-BD'},
-  {code:'NPR',sym:'रू',flag:'🇳🇵',name:'Nepalese Rupee',locale:'ne-NP'},
+  {code:'MYR',sym:'RM',flag:'🇲🇾',name:'Malaysian Ringgit',locale:'en-US'},
+  {code:'PKR',sym:'₨',flag:'🇵🇰',name:'Pakistani Rupee',locale:'en-US'},
+  {code:'BDT',sym:'৳',flag:'🇧🇩',name:'Bangladeshi Taka',locale:'en-US'},
+  {code:'NPR',sym:'रू',flag:'🇳🇵',name:'Nepalese Rupee',locale:'en-US'},
   {code:'JPY',sym:'¥',flag:'🇯🇵',name:'Japanese Yen',locale:'ja-JP'},
-  {code:'KWD',sym:'KD',flag:'🇰🇼',name:'Kuwaiti Dinar',locale:'ar-KW'},
-  {code:'QAR',sym:'QR',flag:'🇶🇦',name:'Qatari Riyal',locale:'ar-QA'},
-  {code:'OMR',sym:'﷼',flag:'🇴🇲',name:'Omani Riyal',locale:'ar-OM'},
-  {code:'BHD',sym:'BD',flag:'🇧🇭',name:'Bahraini Dinar',locale:'ar-BH'},
+  {code:'KWD',sym:'KD',flag:'🇰🇼',name:'Kuwaiti Dinar',locale:'en-US'},
+  {code:'QAR',sym:'QR',flag:'🇶🇦',name:'Qatari Riyal',locale:'en-US'},
   {code:'ZAR',sym:'R',flag:'🇿🇦',name:'South African Rand',locale:'en-ZA'},
-  {code:'NGN',sym:'₦',flag:'🇳🇬',name:'Nigerian Naira',locale:'en-NG'},
-  {code:'KES',sym:'KSh',flag:'🇰🇪',name:'Kenyan Shilling',locale:'sw-KE'},
-  {code:'GHS',sym:'GH₵',flag:'🇬🇭',name:'Ghanaian Cedi',locale:'en-GH'},
+  {code:'NGN',sym:'₦',flag:'🇳🇬',name:'Nigerian Naira',locale:'en-US'},
   {code:'BRL',sym:'R$',flag:'🇧🇷',name:'Brazilian Real',locale:'pt-BR'},
   {code:'MXN',sym:'MX$',flag:'🇲🇽',name:'Mexican Peso',locale:'es-MX'},
-  {code:'PHP',sym:'₱',flag:'🇵🇭',name:'Philippine Peso',locale:'en-PH'},
+  {code:'PHP',sym:'₱',flag:'🇵🇭',name:'Philippine Peso',locale:'en-US'},
   {code:'IDR',sym:'Rp',flag:'🇮🇩',name:'Indonesian Rupiah',locale:'id-ID'},
   {code:'THB',sym:'฿',flag:'🇹🇭',name:'Thai Baht',locale:'th-TH'},
   {code:'VND',sym:'₫',flag:'🇻🇳',name:'Vietnamese Dong',locale:'vi-VN'},
-  {code:'EGP',sym:'E£',flag:'🇪🇬',name:'Egyptian Pound',locale:'ar-EG'},
-  {code:'TRY',sym:'₺',flag:'🇹🇷',name:'Turkish Lira',locale:'tr-TR'}
+  {code:'EGP',sym:'E£',flag:'🇪🇬',name:'Egyptian Pound',locale:'en-US'},
+  {code:'TRY',sym:'₺',flag:'🇹🇷',name:'Turkish Lira',locale:'tr-TR'},
+  {code:'KES',sym:'KSh',flag:'🇰🇪',name:'Kenyan Shilling',locale:'en-US'},
+  {code:'GHS',sym:'GH₵',flag:'🇬🇭',name:'Ghanaian Cedi',locale:'en-US'},
+  {code:'OMR',sym:'﷼',flag:'🇴🇲',name:'Omani Riyal',locale:'en-US'},
+  {code:'BHD',sym:'BD',flag:'🇧🇭',name:'Bahraini Dinar',locale:'en-US'}
 ];
+let CC='USD', emiMode='years', fdMode='years', salData=null, curPayTab='annual';
 
-let currentCurrency = 'USD';
-let emiMode = 'years';
-let fdMode = 'years';
-let salaryData = null;
-let currentPayTab = 'annual';
+function getCO(){return CURR.find(c=>c.code===CC)||CURR[0]}
+function fmt(v){
+  const c=getCO();
+  try{return new Intl.NumberFormat(c.locale,{style:'currency',currency:c.code,maximumFractionDigits:c.code==='JPY'?0:2}).format(v);}
+  catch(e){return c.sym+v.toFixed(c.code==='JPY'?0:2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+}
 
-// ── INIT
+// slider sync
+function sy(inId,slId){const v=parseFloat(document.getElementById(inId).value)||0;const s=document.getElementById(slId);if(v>=parseFloat(s.min)&&v<=parseFloat(s.max))s.value=v;}
+function si(slId,inId){document.getElementById(inId).value=document.getElementById(slId).value;}
+
+// currency
 function init(){
-  const saved = localStorage.getItem('fincalc_currency') || 'USD';
-  const sel = document.getElementById('currencySelect');
-  CURRENCIES.forEach(c=>{
-    const o = document.createElement('option');
-    o.value=c.code; o.textContent=`${c.flag} ${c.code} ${c.sym}`;
-    sel.appendChild(o);
-  });
-  sel.value = saved;
-  currentCurrency = saved;
-  updateSidebarCurrency();
-  calcEMI(); calcSIP(); calcMortgage(); calcSalary(); calcFD(); calcCI();
-  initCounters();
+  const saved=localStorage.getItem('fc_cur')||'USD';
+  const sel=document.getElementById('curSel');
+  CURR.forEach(c=>{const o=document.createElement('option');o.value=c.code;o.textContent=c.flag+' '+c.code;sel.appendChild(o);});
+  sel.value=saved;CC=saved;updateSidebar();
+  calcAll();initCounters();
 }
+function setCurrency(code){CC=code;localStorage.setItem('fc_cur',code);updateSidebar();calcAll();}
+function calcAll(){calcEMI();calcSIP();calcMortgage();calcSalary();calcFD();calcCI();}
+function updateSidebar(){const c=getCO();document.getElementById('sbFlag').textContent=c.flag;document.getElementById('sbName').textContent=c.name;document.getElementById('sbCode').textContent=c.code+' — '+c.sym;document.getElementById('sbNote').textContent='All calculations shown in '+c.name;}
 
-function setCurrency(code){
-  currentCurrency = code;
-  localStorage.setItem('fincalc_currency',code);
-  updateSidebarCurrency();
-  updateEmiDisplay(); updateSipDisplay(); updateSalDisplay(); updateFdDisplay(); updateCiDisplay(); updateMortgageCalc();
-  calcEMI(); calcSIP(); calcMortgage(); calcSalary(); calcFD(); calcCI();
-}
-
-function getCurrObj(){ return CURRENCIES.find(c=>c.code===currentCurrency)||CURRENCIES[0]; }
-
-function fmt(amount){
-  const c = getCurrObj();
-  try{
-    return new Intl.NumberFormat(c.locale,{style:'currency',currency:c.code,maximumFractionDigits:c.code==='JPY'?0:2}).format(amount);
-  } catch(e){
-    return c.sym + amount.toFixed(c.code==='JPY'?0:2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-  }
-}
-
-function updateSidebarCurrency(){
-  const c = getCurrObj();
-  document.getElementById('sidebarFlag').textContent = c.flag;
-  document.getElementById('sidebarCurrName').textContent = c.name;
-  document.getElementById('sidebarCurrSym').textContent = `${c.code} — ${c.sym}`;
-  document.getElementById('sidebarCurrNote').textContent = `All calculations shown in ${c.name}`;
-}
-
-// ── SLIDER SYNC
-function syncSlider(inpId, slId){
-  const v = parseFloat(document.getElementById(inpId).value)||0;
-  const sl = document.getElementById(slId);
-  if(v >= parseFloat(sl.min) && v <= parseFloat(sl.max)) sl.value = v;
-}
-function syncInput(slId, inpId){
-  document.getElementById(inpId).value = document.getElementById(slId).value;
-}
-
-// ── TAB SWITCHING
+// tabs
 function switchTab(id){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
-  document.querySelectorAll('.calc-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
-  document.querySelector('.main-section').scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  document.querySelectorAll('.cpanel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
+  document.querySelector('.main-sec').scrollIntoView({behavior:'smooth'});
 }
+function jump(id){switchTab(id);}
 
-// ── MOBILE MENU
-document.getElementById('hamburger').onclick = ()=>{ document.getElementById('mobileNav').classList.add('open'); document.body.classList.add('no-scroll'); };
-document.getElementById('mobileClose').onclick = closeMenu;
-function closeMenu(){ document.getElementById('mobileNav').classList.remove('open'); document.body.classList.remove('no-scroll'); }
+// mobile menu
+document.getElementById('hbg').onclick=()=>{document.getElementById('mobNav').classList.add('open');document.body.classList.add('no-scroll');};
+document.getElementById('mobClose').onclick=closeMenu;
+function closeMenu(){document.getElementById('mobNav').classList.remove('open');document.body.classList.remove('no-scroll');}
 
-// ── STICKY HEADER
-window.addEventListener('scroll',()=>{ document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>10); });
+// expandable
+function toggleExp(id){document.getElementById(id).classList.toggle('open');}
 
-// ── EXPANDABLE
-function toggleExpand(id){
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
+// faq
+function toggleFaq(el){const a=el.nextElementSibling;const op=a.classList.contains('open');document.querySelectorAll('.fqa').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.fqq').forEach(x=>x.classList.remove('open'));if(!op){a.classList.add('open');el.classList.add('open');}}
+
+// amort toggle
+function toggleAmort(){document.getElementById('amortWrap').classList.toggle('show');}
+
+// ── CANVAS UTILS ──
+function getCanvasSize(id){
+  const c=document.getElementById(id);if(!c)return{w:300,h:200};
+  const pw=c.parentElement.clientWidth||300;
+  return{c,pw};
 }
-
-// ── FAQ
-function toggleFaq(el){
-  const a = el.nextElementSibling;
-  const isOpen = a.classList.contains('open');
-  document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
-  document.querySelectorAll('.faq-q').forEach(x=>x.classList.remove('open'));
-  if(!isOpen){ a.classList.add('open'); el.classList.add('open'); }
-}
-
-// ── AMORTIZATION
-function toggleAmort(){
-  const w = document.getElementById('amortWrap');
-  w.classList.toggle('show');
-}
-
-// ══════════════════════════════════
-// DONUT CHART
-// ══════════════════════════════════
-function drawDonut(canvasId, data, centerLabel){
-  const canvas = document.getElementById(canvasId);
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w=canvas.width, h=canvas.height, cx=w/2, cy=h/2;
-  const r = Math.min(w,h)/2 - 20;
-  const innerR = r*0.58;
-  const total = data.reduce((s,d)=>s+d.value,0);
-  if(total<=0) return;
-  ctx.clearRect(0,0,w,h);
-  let startAngle = -Math.PI/2;
-  const duration = 900, startTime = performance.now();
+function drawDonut(id,data,label){
+  const el=document.getElementById(id);if(!el)return;
+  const pw=el.parentElement.clientWidth||280;
+  const size=Math.min(pw,240);
+  el.width=size;el.height=size;
+  const ctx=el.getContext('2d');
+  const cx=size/2,cy=size/2,r=size/2-10,ir=r*0.58;
+  const total=data.reduce((s,d)=>s+d.v,0);if(total<=0)return;
+  const dur=800,st=performance.now();
   function draw(now){
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed/duration, 1);
-    const ease = 1 - Math.pow(1-progress,3);
-    ctx.clearRect(0,0,w,h);
-    let angle = -Math.PI/2;
+    const prog=Math.min((now-st)/dur,1);const ease=1-Math.pow(1-prog,3);
+    ctx.clearRect(0,0,size,size);
+    let ang=-Math.PI/2;
     data.forEach(d=>{
-      const slice = (d.value/total)*Math.PI*2*ease;
-      ctx.beginPath();
-      ctx.moveTo(cx,cy);
-      ctx.arc(cx,cy,r,angle,angle+slice);
-      ctx.closePath();
-      ctx.fillStyle = d.color;
-      ctx.fill();
-      angle += slice;
+      const sl=(d.v/total)*Math.PI*2*ease;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,ang,ang+sl);ctx.closePath();ctx.fillStyle=d.c;ctx.fill();ang+=sl;
     });
-    ctx.beginPath();
-    ctx.arc(cx,cy,innerR,0,Math.PI*2);
-    ctx.fillStyle='#fff';
-    ctx.fill();
-    ctx.textAlign='center';
-    ctx.textBaseline='middle';
-    ctx.fillStyle='#0f172a';
-    ctx.font='bold 12px Inter';
-    ctx.fillText(centerLabel||'',cx,cy);
-    if(progress<1) requestAnimationFrame(draw);
+    ctx.beginPath();ctx.arc(cx,cy,ir,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#0f172a';ctx.font='bold 10px Inter';ctx.fillText(label||'',cx,cy);
+    if(prog<1)requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
 }
-
-// ══════════════════════════════════
-// LINE / AREA CHART
-// ══════════════════════════════════
-function drawLineChart(canvasId, datasets, labels){
-  const canvas = document.getElementById(canvasId);
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w=canvas.width, h=canvas.height;
-  const pad={top:20,right:20,bottom:40,left:70};
-  const chartW = w - pad.left - pad.right;
-  const chartH = h - pad.top - pad.bottom;
-  const allVals = datasets.flatMap(d=>d.data);
-  const maxV = Math.max(...allVals)*1.08;
-  const minV = 0;
-  function xPos(i){ return pad.left + (i/(labels.length-1))*chartW; }
-  function yPos(v){ return pad.top + chartH - ((v-minV)/(maxV-minV))*chartH; }
-  const duration=1200, startTime=performance.now();
+function drawLine(id,datasets,labels){
+  const el=document.getElementById(id);if(!el)return;
+  const pw=el.parentElement.clientWidth||300;
+  el.width=pw;el.height=Math.round(pw*0.45);
+  const ctx=el.getContext('2d');
+  const w=el.width,h=el.height;
+  const pad={t:12,r:12,b:32,l:60};
+  const cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
+  const all=datasets.flatMap(d=>d.data);
+  const maxV=Math.max(...all)*1.08||1;
+  const xp=i=>pad.l+(i/(labels.length-1||1))*cw;
+  const yp=v=>pad.t+ch-(v/maxV)*ch;
+  const dur=1000,st=performance.now();
   function draw(now){
-    const elapsed=now-startTime;
-    const progress=Math.min(elapsed/duration,1);
-    const ease=1-Math.pow(1-progress,3);
+    const prog=Math.min((now-st)/dur,1);const ease=1-Math.pow(1-prog,3);
     ctx.clearRect(0,0,w,h);
-    const gridLines=5;
-    ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=1;
-    for(let i=0;i<=gridLines;i++){
-      const y=pad.top+chartH*(1-i/gridLines);
-      ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+chartW,y); ctx.stroke();
-      ctx.fillStyle='#94a3b8'; ctx.font='11px Inter'; ctx.textAlign='right';
-      const val=minV+(maxV-minV)*(i/gridLines);
-      ctx.fillText(fmt(val).replace(/\.00$/,''),pad.left-8,y+4);
-    }
-    // X labels
-    ctx.fillStyle='#94a3b8'; ctx.font='11px Inter'; ctx.textAlign='center';
-    const step = Math.ceil(labels.length/10);
-    labels.forEach((l,i)=>{ if(i%step===0||i===labels.length-1) ctx.fillText(l,xPos(i),pad.top+chartH+20); });
-    const clipEnd = pad.left + chartW*ease;
+    // grid
+    ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){const y=pad.t+ch*(1-i/4);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cw,y);ctx.stroke();ctx.fillStyle='#94a3b8';ctx.font='10px Inter';ctx.textAlign='right';ctx.fillText(fmt(maxV*(i/4)).replace(/\.00$/,''),pad.l-4,y+4);}
+    // x labels
+    ctx.fillStyle='#94a3b8';ctx.font='10px Inter';ctx.textAlign='center';
+    const step=Math.ceil(labels.length/8);
+    labels.forEach((l,i)=>{if(i%step===0||i===labels.length-1)ctx.fillText(l,xp(i),pad.t+ch+18);});
+    // clip & draw
+    const clipW=pad.l+cw*ease;
     datasets.forEach((ds,di)=>{
-      const pts = ds.data.map((v,i)=>({x:xPos(i),y:yPos(v)}));
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(pad.left,0,clipEnd-pad.left,h);
-      ctx.clip();
+      ctx.save();ctx.beginPath();ctx.rect(pad.l,0,clipW-pad.l,h);ctx.clip();
       if(di===0&&datasets.length>1){
-        // filled area between
-        ctx.beginPath();
-        ctx.moveTo(pts[0].x,pts[0].y);
-        pts.forEach(p=>ctx.lineTo(p.x,p.y));
-        const pts2 = datasets[1].data.map((v,i)=>({x:xPos(i),y:yPos(v)}));
-        for(let i=pts2.length-1;i>=0;i--) ctx.lineTo(pts2[i].x,pts2[i].y);
-        ctx.closePath();
-        ctx.fillStyle='rgba(99,102,241,0.1)';
-        ctx.fill();
+        const pts2=datasets[1].data.map((v,i)=>({x:xp(i),y:yp(v)}));
+        const pts=ds.data.map((v,i)=>({x:xp(i),y:yp(v)}));
+        ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);pts.forEach(p=>ctx.lineTo(p.x,p.y));
+        for(let i=pts2.length-1;i>=0;i--)ctx.lineTo(pts2[i].x,pts2[i].y);
+        ctx.closePath();ctx.fillStyle='rgba(99,102,241,0.08)';ctx.fill();
       }
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x,pts[0].y);
-      pts.forEach(p=>ctx.lineTo(p.x,p.y));
-      ctx.strokeStyle=ds.color;
-      ctx.lineWidth=2.5;
-      ctx.setLineDash(ds.dash||[]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.restore();
+      const pts=ds.data.map((v,i)=>({x:xp(i),y:yp(v)}));
+      ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);pts.forEach(p=>ctx.lineTo(p.x,p.y));
+      ctx.strokeStyle=ds.color;ctx.lineWidth=2;ctx.setLineDash(ds.dash||[]);ctx.stroke();ctx.setLineDash([]);ctx.restore();
     });
-    if(progress<1) requestAnimationFrame(draw);
+    if(prog<1)requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
 }
 
-// ══════════════════════════════════
-// CALC 1: EMI
-// ══════════════════════════════════
-function setEmiMode(m){
-  emiMode=m;
-  document.getElementById('emiYrBtn').classList.toggle('active',m==='years');
-  document.getElementById('emiMoBtn').classList.toggle('active',m==='months');
-  const sl=document.getElementById('emiTenureSlider');
-  const inp=document.getElementById('emiTenure');
-  if(m==='years'){sl.min=1;sl.max=30;sl.step=1;inp.min=1;inp.max=30;if(parseFloat(inp.value)>30)inp.value=30;}
-  else{sl.min=6;sl.max=360;sl.step=6;inp.min=6;inp.max=360;if(parseFloat(inp.value)<6)inp.value=60;}
-  updateEmiDisplay(); calcEMI();
-}
-function updateEmiDisplay(){
-  const amt=parseFloat(document.getElementById('emiAmount').value)||0;
-  const rate=parseFloat(document.getElementById('emiRate').value)||0;
-  const tenure=parseFloat(document.getElementById('emiTenure').value)||0;
-  document.getElementById('emiAmtDisplay').textContent=fmt(amt);
-  document.getElementById('emiRateDisplay').textContent=rate+'% per year';
-  document.getElementById('emiTenureDisplay').textContent=tenure+(emiMode==='years'?' Year'+(tenure!==1?'s':''):'  Month'+(tenure!==1?'s':''));
-}
+// ── EMI ──
+function setEmiMode(m){emiMode=m;document.getElementById('emiYB').classList.toggle('active',m==='years');document.getElementById('emiMB').classList.toggle('active',m==='months');const s=document.getElementById('emiTenS'),i=document.getElementById('emiTen');if(m==='years'){s.min=1;s.max=30;i.max=30;}else{s.min=6;s.max=360;i.max=360;}udEmi();calcEMI();}
+function udEmi(){const a=document.getElementById('emiAmt').value||0,r=document.getElementById('emiRate').value||0,t=document.getElementById('emiTen').value||0;document.getElementById('emiAmtD').textContent=fmt(a);document.getElementById('emiRateD').textContent=r+'%';document.getElementById('emiTenD').textContent=t+(emiMode==='years'?' Yr'+( t!=1?'s':''):' Mo'+( t!=1?'s':''));}
 function calcEMI(){
-  const P=parseFloat(document.getElementById('emiAmount').value)||0;
-  const annualRate=parseFloat(document.getElementById('emiRate').value)||0;
-  let n=parseFloat(document.getElementById('emiTenure').value)||0;
-  if(emiMode==='years') n=n*12;
-  const r=annualRate/100/12;
-  let emi;
-  if(r===0){ emi=P/n; }
-  else { emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1); }
-  const totalPayment=emi*n;
-  const totalInterest=totalPayment-P;
-  document.getElementById('emiMonthly').textContent=fmt(emi);
-  document.getElementById('emiTotalInt').textContent=fmt(totalInterest);
-  document.getElementById('emiTotal').textContent=fmt(totalPayment);
-  drawDonut('emiDonut',[{value:P,color:'#6366f1'},{value:Math.max(totalInterest,0),color:'#10b981'}],'Principal\nvs Interest');
-  buildAmortTable(P,r,emi,n);
+  const P=parseFloat(document.getElementById('emiAmt').value)||0;
+  const ar=parseFloat(document.getElementById('emiRate').value)||0;
+  let n=parseFloat(document.getElementById('emiTen').value)||0;
+  if(emiMode==='years')n*=12;
+  const r=ar/100/12;
+  const emi=r===0?P/n:P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const tot=emi*n,ti=tot-P;
+  document.getElementById('emiMon').textContent=fmt(emi);
+  document.getElementById('emiInt').textContent=fmt(ti);
+  document.getElementById('emiTot').textContent=fmt(tot);
+  drawDonut('emiDonut',[{v:P,c:'#6366f1'},{v:Math.max(ti,0),c:'#10b981'}],'EMI');
+  buildAmort(P,r,emi,n);
 }
-let amortAllRows=[];
-function buildAmortTable(P,r,emi,n){
-  const tbody=document.getElementById('amortBody');
-  tbody.innerHTML='';
-  amortAllRows=[];
-  let balance=P;
-  for(let i=1;i<=n;i++){
-    const interest=balance*r;
-    const principal=emi-interest;
-    balance=Math.max(0,balance-principal);
-    amortAllRows.push({i,emi,principal,interest,balance});
-  }
-  const show=Math.min(12,amortAllRows.length);
-  amortAllRows.slice(0,show).forEach(row=>{
-    tbody.innerHTML+=`<tr><td>${row.i}</td><td>${fmt(row.emi)}</td><td>${fmt(row.principal)}</td><td>${fmt(row.interest)}</td><td>${fmt(row.balance)}</td></tr>`;
-  });
-  const btn=document.getElementById('showAllBtn');
-  btn.style.display = amortAllRows.length>12?'block':'none';
+let amortRows=[];
+function buildAmort(P,r,emi,n){
+  const b=document.getElementById('amortBdy');b.innerHTML='';amortRows=[];
+  let bal=P;
+  for(let i=1;i<=n;i++){const int=bal*r,pri=emi-int;bal=Math.max(0,bal-pri);amortRows.push({i,emi,pri,int,bal});}
+  amortRows.slice(0,12).forEach(row=>{b.innerHTML+=`<tr><td>${row.i}</td><td>${fmt(row.emi)}</td><td>${fmt(row.pri)}</td><td>${fmt(row.int)}</td><td>${fmt(row.bal)}</td></tr>`;});
+  const btn=document.getElementById('showAllBtn');btn.style.display=amortRows.length>12?'block':'none';
 }
-function showAllAmort(){
-  const tbody=document.getElementById('amortBody');
-  tbody.innerHTML='';
-  amortAllRows.forEach(row=>{
-    tbody.innerHTML+=`<tr><td>${row.i}</td><td>${fmt(row.emi)}</td><td>${fmt(row.principal)}</td><td>${fmt(row.interest)}</td><td>${fmt(row.balance)}</td></tr>`;
-  });
-  document.getElementById('showAllBtn').style.display='none';
-}
+function showAllAmort(){const b=document.getElementById('amortBdy');b.innerHTML='';amortRows.forEach(r=>{b.innerHTML+=`<tr><td>${r.i}</td><td>${fmt(r.emi)}</td><td>${fmt(r.pri)}</td><td>${fmt(r.int)}</td><td>${fmt(r.bal)}</td></tr>`;});document.getElementById('showAllBtn').style.display='none';}
 
-// ══════════════════════════════════
-// CALC 2: SIP
-// ══════════════════════════════════
-function updateSipDisplay(){
-  const amt=parseFloat(document.getElementById('sipAmount').value)||0;
-  const rate=parseFloat(document.getElementById('sipRate').value)||0;
-  const yrs=parseFloat(document.getElementById('sipYears').value)||0;
-  document.getElementById('sipAmtDisplay').textContent=fmt(amt);
-  document.getElementById('sipRateDisplay').textContent=rate+'% p.a.';
-  document.getElementById('sipPeriodDisplay').textContent=yrs+' Year'+(yrs!==1?'s':'');
-}
+// ── SIP ──
+function udSip(){const a=document.getElementById('sipAmt').value||0,r=document.getElementById('sipRate').value||0,y=document.getElementById('sipYr').value||0;document.getElementById('sipAmtD').textContent=fmt(a);document.getElementById('sipRateD').textContent=r+'%';document.getElementById('sipYrD').textContent=y+' Yr'+(y!=1?'s':'');}
 function calcSIP(){
-  const monthly=parseFloat(document.getElementById('sipAmount').value)||0;
-  const annualRate=parseFloat(document.getElementById('sipRate').value)||0;
-  const years=parseInt(document.getElementById('sipYears').value)||1;
+  const mo=parseFloat(document.getElementById('sipAmt').value)||0;
+  const ar=parseFloat(document.getElementById('sipRate').value)||0;
+  const yrs=parseInt(document.getElementById('sipYr').value)||1;
   const freq=parseInt(document.getElementById('sipFreq').value)||12;
-  const perContrib = monthly*(12/freq);
-  const r=annualRate/100/freq;
-  const n=years*freq;
-  let FV;
-  if(r===0){ FV=perContrib*n; }
-  else { FV=perContrib*((Math.pow(1+r,n)-1)/r)*(1+r); }
-  const invested=perContrib*n;
-  const returns=FV-invested;
-  document.getElementById('sipInvested').textContent=fmt(invested);
-  document.getElementById('sipReturns').textContent=fmt(returns);
-  document.getElementById('sipTotal').textContent=fmt(FV);
-  // Build yearly data for chart
-  const chartLabels=[], investedData=[], portfolioData=[];
-  for(let y=0;y<=years;y++){
-    chartLabels.push('Yr '+y);
-    const ny=y*freq;
-    const inv=perContrib*ny;
-    let pv;
-    if(r===0){ pv=inv; }
-    else { pv=perContrib*((Math.pow(1+r,ny)-1)/r)*(1+r); }
-    investedData.push(inv);
-    portfolioData.push(pv||0);
-  }
-  drawLineChart('sipChart',[{data:investedData,color:'#94a3b8',dash:[6,4]},{data:portfolioData,color:'#6366f1'}],chartLabels);
-  // Wealth grid
-  const grid=document.getElementById('sipWealthGrid');
-  grid.innerHTML='';
-  [1,3,5,10,20].filter(y=>y<=years).forEach(y=>{
-    const ny=y*freq;
-    let pv;
-    if(r===0){ pv=perContrib*ny; }
-    else { pv=perContrib*((Math.pow(1+r,ny)-1)/r)*(1+r); }
-    grid.innerHTML+=`<div class="wealth-item"><div class="wealth-item-label">Year ${y}</div><div class="wealth-item-val">${fmt(pv)}</div></div>`;
-  });
+  const pc=mo*(12/freq),r=ar/100/freq,n=yrs*freq;
+  const FV=r===0?pc*n:pc*((Math.pow(1+r,n)-1)/r)*(1+r);
+  const inv=pc*n,ret=FV-inv;
+  document.getElementById('sipInv').textContent=fmt(inv);
+  document.getElementById('sipRet').textContent=fmt(ret);
+  document.getElementById('sipTot').textContent=fmt(FV);
+  const lbl=[],invD=[],portD=[];
+  for(let y=0;y<=yrs;y++){lbl.push('Yr'+y);const ny=y*freq,i=pc*ny;const pv=r===0?i:pc*((Math.pow(1+r,ny)-1)/r)*(1+r)||0;invD.push(i);portD.push(pv);}
+  drawLine('sipChart',[{data:invD,color:'#94a3b8',dash:[5,4]},{data:portD,color:'#6366f1'}],lbl);
+  const wg=document.getElementById('sipWG');wg.innerHTML='';
+  [1,3,5,10,20].filter(y=>y<=yrs).forEach(y=>{const ny=y*freq;const pv=r===0?pc*ny:pc*((Math.pow(1+r,ny)-1)/r)*(1+r);wg.innerHTML+=`<div class="witem"><div class="wlbl">Year ${y}</div><div class="wval">${fmt(pv)}</div></div>`;});
 }
 
-// ══════════════════════════════════
-// CALC 3: MORTGAGE
-// ══════════════════════════════════
-function mortDownAmtChanged(){
-  const price=parseFloat(document.getElementById('mortPrice').value)||0;
-  const amt=parseFloat(document.getElementById('mortDownAmt').value)||0;
-  if(price>0) document.getElementById('mortDownPct').value=(amt/price*100).toFixed(1);
-  updateMortgageCalc();
-}
-function mortDownPctChanged(){
-  const price=parseFloat(document.getElementById('mortPrice').value)||0;
-  const pct=parseFloat(document.getElementById('mortDownPct').value)||0;
-  document.getElementById('mortDownAmt').value=(price*pct/100).toFixed(0);
-  updateMortgageCalc();
-}
-function updateMortgageCalc(){
-  const price=parseFloat(document.getElementById('mortPrice').value)||0;
-  const down=parseFloat(document.getElementById('mortDownAmt').value)||0;
-  document.getElementById('mortPriceDisplay').textContent=fmt(price);
-  document.getElementById('mortLoanAmt').value=fmt(price-down);
-  const rate=parseFloat(document.getElementById('mortRate').value)||0;
-  document.getElementById('mortRateDisplay').textContent=rate+'%';
-  calcMortgage();
-}
+// ── MORTGAGE ──
+function mortAmtCh(){const p=parseFloat(document.getElementById('mortPr').value)||0;const a=parseFloat(document.getElementById('mortDA').value)||0;if(p>0)document.getElementById('mortDP').value=(a/p*100).toFixed(1);mortUpdate();}
+function mortPctCh(){const p=parseFloat(document.getElementById('mortPr').value)||0;const pct=parseFloat(document.getElementById('mortDP').value)||0;document.getElementById('mortDA').value=(p*pct/100).toFixed(0);mortUpdate();}
+function mortUpdate(){const p=parseFloat(document.getElementById('mortPr').value)||0,d=parseFloat(document.getElementById('mortDA').value)||0;document.getElementById('mortPrD').textContent=fmt(p);document.getElementById('mortLA').value=fmt(p-d);document.getElementById('mortRateD').textContent=(document.getElementById('mortRate').value||0)+'%';calcMortgage();}
 function calcMortgage(){
-  const price=parseFloat(document.getElementById('mortPrice').value)||0;
-  const down=parseFloat(document.getElementById('mortDownAmt').value)||0;
-  const P=price-down;
-  const annualRate=parseFloat(document.getElementById('mortRate').value)||0;
-  const years=parseInt(document.getElementById('mortTerm').value)||30;
+  const pr=parseFloat(document.getElementById('mortPr').value)||0;
+  const dn=parseFloat(document.getElementById('mortDA').value)||0;
+  const P=pr-dn;
+  const ar=parseFloat(document.getElementById('mortRate').value)||0;
+  const yrs=parseInt(document.getElementById('mortTerm').value)||30;
   const tax=parseFloat(document.getElementById('mortTax').value)||0;
-  const ins=parseFloat(document.getElementById('mortInsurance').value)||0;
+  const ins=parseFloat(document.getElementById('mortIns').value)||0;
   const hoa=parseFloat(document.getElementById('mortHOA').value)||0;
-  const r=annualRate/100/12;
-  const n=years*12;
-  let pi;
-  if(r===0){ pi=P/n; }
-  else { pi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1); }
-  const monthTax=tax/12, monthIns=ins/12;
-  const pmi=(down/price<0.20&&price>0)?(P*0.01/12):0;
-  const total=pi+monthTax+monthIns+hoa+pmi;
-  const totalPaid=total*n;
-  const totalInt=pi*n-P;
-  const payoffDate=new Date();
-  payoffDate.setMonth(payoffDate.getMonth()+n);
-  document.getElementById('mortTotalMonthly').textContent=fmt(total);
+  const r=ar/100/12,n=yrs*12;
+  const pi=r===0?P/n:P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const mt=tax/12,mi=ins/12;
+  const pmi=(dn/pr<0.20&&pr>0)?(P*0.01/12):0;
+  const tot=pi+mt+mi+hoa+pmi;
+  const pd=new Date();pd.setMonth(pd.getMonth()+n);
+  document.getElementById('mortTotM').textContent=fmt(tot);
   document.getElementById('mortPI').textContent=fmt(pi);
-  document.getElementById('mortTaxLine').textContent=fmt(monthTax);
-  document.getElementById('mortInsLine').textContent=fmt(monthIns);
-  document.getElementById('mortHOALine').textContent=fmt(hoa);
-  document.getElementById('mortPMILine').textContent=pmi>0?fmt(pmi):'$0.00';
-  document.getElementById('mortTotalCost').textContent=fmt(totalPaid);
-  document.getElementById('mortTotalInt').textContent=fmt(totalInt);
-  document.getElementById('mortPayoff').textContent=payoffDate.toLocaleDateString('en-US',{month:'short',year:'numeric'});
-  drawMortgageBar(pi,monthTax,monthIns,hoa,pmi);
+  document.getElementById('mortTaxL').textContent=fmt(mt);
+  document.getElementById('mortInsL').textContent=fmt(mi);
+  document.getElementById('mortHOAL').textContent=fmt(hoa);
+  document.getElementById('mortPMIL').textContent=pmi>0?fmt(pmi):'—';
+  document.getElementById('mortTC').textContent=fmt(tot*n);
+  document.getElementById('mortTI').textContent=fmt(pi*n-P);
+  document.getElementById('mortPO').textContent=pd.toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  drawMortBar(pi,mt,mi,hoa,pmi);
 }
-function drawMortgageBar(pi,tax,ins,hoa,pmi){
-  const canvas=document.getElementById('mortChart');
-  if(!canvas) return;
-  const ctx=canvas.getContext('2d');
-  const w=canvas.width, h=canvas.height;
+function drawMortBar(pi,tx,ins,hoa,pmi){
+  const el=document.getElementById('mortChart');if(!el)return;
+  const pw=el.parentElement.clientWidth||280;
+  el.width=pw;el.height=Math.round(pw*0.45);
+  const ctx=el.getContext('2d');const w=el.width,h=el.height;
   ctx.clearRect(0,0,w,h);
-  const items=[
-    {label:'Principal & Int.',value:pi,color:'#6366f1'},
-    {label:'Property Tax',value:tax,color:'#10b981'},
-    {label:'Insurance',value:ins,color:'#f59e0b'},
-    {label:'HOA',value:hoa,color:'#06b6d4'},
-    {label:'PMI',value:pmi,color:'#ec4899'}
-  ].filter(x=>x.value>0);
-  const total=items.reduce((s,i)=>s+i.value,0);
-  const barH=60, barY=60, barX=20, barW=w-40;
-  let x=barX;
-  items.forEach(item=>{
-    const bw=(item.value/total)*barW;
-    ctx.fillStyle=item.color;
-    ctx.beginPath();
-    ctx.roundRect(x,barY,bw,barH,4);
-    ctx.fill();
-    x+=bw;
-  });
-  // Legend
-  let lx=barX, ly=barY+barH+24;
-  ctx.font='11px Inter';
-  items.forEach(item=>{
-    ctx.fillStyle=item.color;
-    ctx.fillRect(lx,ly-8,10,10);
-    ctx.fillStyle='#475569';
-    ctx.fillText(`${item.label}: ${fmt(item.value)}`,lx+14,ly);
-    lx+=140;
-    if(lx>barW){ lx=barX; ly+=20; }
-  });
+  const items=[{l:'P&I',v:pi,c:'#6366f1'},{l:'Tax',v:tx,c:'#10b981'},{l:'Ins',v:ins,c:'#f59e0b'},{l:'HOA',v:hoa,c:'#06b6d4'},{l:'PMI',v:pmi,c:'#ec4899'}].filter(x=>x.v>0);
+  const tot=items.reduce((s,i)=>s+i.v,0);
+  const bh=Math.round(h*0.35),by=Math.round(h*0.15),bx=12,bw=w-24;
+  let x=bx;
+  items.forEach(it=>{const iw=(it.v/tot)*bw;ctx.fillStyle=it.c;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,by,iw,bh,3);else ctx.rect(x,by,iw,bh);ctx.fill();x+=iw;});
+  let lx=bx,ly=by+bh+18;ctx.font='10px Inter';
+  items.forEach(it=>{ctx.fillStyle=it.c;ctx.fillRect(lx,ly-7,8,8);ctx.fillStyle='#475569';ctx.fillText(it.l+': '+fmt(it.v),lx+10,ly);lx+=Math.min(100,bw/items.length);if(lx>bw){lx=bx;ly+=16;}});
 }
 
-// ══════════════════════════════════
-// CALC 4: SALARY
-// ══════════════════════════════════
-document.getElementById('salRegion').addEventListener('change',function(){
-  document.getElementById('customTaxGroup').style.display=this.value==='other'?'block':'none';
-});
-function updateSalDisplay(){
-  const v=parseFloat(document.getElementById('salGross').value)||0;
-  document.getElementById('salAmtDisplay').textContent=fmt(v);
-}
+// ── SALARY ──
+function udSal(){const v=parseFloat(document.getElementById('salGross').value)||0;document.getElementById('salAmtD').textContent=fmt(v);}
 function calcSalary(){
-  const gross=parseFloat(document.getElementById('salGross').value)||0;
-  const region=document.getElementById('salRegion').value;
-  const pension=parseFloat(document.getElementById('salPension').value)||0;
-  const health=parseFloat(document.getElementById('salHealth').value)||0;
-  const other=parseFloat(document.getElementById('salOther').value)||0;
-  // Tax rates by region (simplified brackets)
-  const taxRates={us:{income:0.137,ss:0.062,medicare:0.0145,state:0.04},
-    uk:{income:0.20,ss:0.12,state:0},ca:{income:0.205,ss:0.0595,state:0},
-    au:{income:0.19,ss:0,state:0},eu:{income:0.25,ss:0.15,state:0},
-    in:{income:0.20,ss:0.12,state:0},uae:{income:0,ss:0,state:0},other:{income:0,ss:0,state:0}};
-  const rates=taxRates[region]||taxRates.us;
-  if(region==='other'){
-    rates.income=(parseFloat(document.getElementById('salCustomTax').value)||0)/100;
-    rates.ss=0; rates.state=0;
-  }
-  const pensionAmt=gross*(pension/100);
-  const healthAmt=health*12;
-  const taxableIncome=Math.max(0,gross-pensionAmt-healthAmt-other);
-  const incomeTax=taxableIncome*rates.income;
-  const ssTax=gross*rates.ss;
-  const medicare=region==='us'?gross*rates.medicare:0;
-  const stateTax=taxableIncome*rates.state;
-  const totalDeductions=incomeTax+ssTax+medicare+stateTax+pensionAmt+healthAmt+other;
-  const net=gross-totalDeductions;
-  salaryData={gross,incomeTax,ssTax,medicare,stateTax,pensionAmt,healthAmt,other,net,region};
-  showPayTab(currentPayTab,null);
-  // Donut
-  const donutData=[
-    {value:net,color:'#10b981'},{value:incomeTax,color:'#6366f1'},
-    {value:ssTax,color:'#f59e0b'},{value:medicare,color:'#ec4899'},
-    {value:pensionAmt,color:'#06b6d4'},{value:healthAmt,color:'#94a3b8'}
-  ].filter(d=>d.value>0);
-  drawDonut('salDonut',donutData,'Net Pay');
-  const legend=document.getElementById('salLegend');
-  const labels=['Net Pay','Income Tax','Social Security','Medicare','Pension','Health Ins.'];
-  const colors=['#10b981','#6366f1','#f59e0b','#ec4899','#06b6d4','#94a3b8'];
-  legend.innerHTML=donutData.map((_,i)=>`<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div>${labels[i]}</div>`).join('');
+  const g=parseFloat(document.getElementById('salGross').value)||0;
+  const reg=document.getElementById('salReg').value;
+  const rates={us:{inc:0.137,ss:0.062,med:0.0145,st:0.04},uk:{inc:0.20,ss:0.12,med:0,st:0},ca:{inc:0.205,ss:0.0595,med:0,st:0},au:{inc:0.19,ss:0,med:0,st:0},eu:{inc:0.25,ss:0.15,med:0,st:0},in:{inc:0.20,ss:0.12,med:0,st:0},uae:{inc:0,ss:0,med:0,st:0},other:{inc:0,ss:0,med:0,st:0}};
+  const rt=rates[reg]||rates.us;
+  if(reg==='other')rt.inc=(parseFloat(document.getElementById('salCT').value)||0)/100;
+  const pen=g*(parseFloat(document.getElementById('salPen').value)||0)/100;
+  const hlth=(parseFloat(document.getElementById('salHlth').value)||0)*12;
+  const oth=parseFloat(document.getElementById('salOth').value)||0;
+  const tax=(g-pen-hlth-oth)*rt.inc;
+  const ss=g*rt.ss,med=g*rt.med,st=(g-pen-hlth-oth)*rt.st;
+  const net=g-tax-ss-med-st-pen-hlth-oth;
+  salData={g,tax,ss,med,st,pen,hlth,oth,net};
+  showPay(curPayTab,null);
+  const dd=[{v:net,c:'#10b981'},{v:tax,c:'#6366f1'},{v:ss,c:'#f59e0b'},{v:med,c:'#ec4899'},{v:pen,c:'#06b6d4'},{v:hlth,c:'#94a3b8'}].filter(d=>d.v>0);
+  drawDonut('salDonut',dd,'Net');
+  const lg=document.getElementById('salLeg');
+  const lbls=['Net Pay','Income Tax','Social Sec.','Medicare','Pension','Health'];
+  const cols=['#10b981','#6366f1','#f59e0b','#ec4899','#06b6d4','#94a3b8'];
+  lg.innerHTML=dd.map((_,i)=>`<div class="leg-i"><div class="leg-d" style="background:${cols[i]}"></div>${lbls[i]}</div>`).join('');
 }
-function showPayTab(tab,btn){
-  currentPayTab=tab;
-  if(btn){ document.querySelectorAll('.pay-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-  if(!salaryData) return;
-  const divs={annual:1,monthly:12,biweekly:26,weekly:52};
-  const d=divs[tab]||1;
-  const {gross,incomeTax,ssTax,medicare,stateTax,pensionAmt,healthAmt,other,net,region}=salaryData;
-  const g=v=>fmt(v/d);
-  let rows=`<div class="salary-gross"><span>Gross Pay</span><span>${g(gross)}</span></div>`;
-  if(incomeTax>0) rows+=`<div class="salary-line deduct"><span>Income Tax</span><span>− ${g(incomeTax)}</span></div>`;
-  if(ssTax>0) rows+=`<div class="salary-line deduct"><span>Social Security / NI</span><span>− ${g(ssTax)}</span></div>`;
-  if(medicare>0) rows+=`<div class="salary-line deduct"><span>Medicare</span><span>− ${g(medicare)}</span></div>`;
-  if(stateTax>0) rows+=`<div class="salary-line deduct"><span>State / Local Tax</span><span>− ${g(stateTax)}</span></div>`;
-  if(pensionAmt>0) rows+=`<div class="salary-line deduct"><span>Pension / 401k</span><span>− ${g(pensionAmt)}</span></div>`;
-  if(healthAmt>0) rows+=`<div class="salary-line deduct"><span>Health Insurance</span><span>− ${g(healthAmt)}</span></div>`;
-  if(other>0) rows+=`<div class="salary-line deduct"><span>Other Deductions</span><span>− ${g(other)}</span></div>`;
-  rows+=`<div class="salary-net"><span>NET TAKE-HOME PAY ✓</span><span>${g(net)}</span></div>`;
-  document.getElementById('salBreakdown').innerHTML=rows;
+function showPay(tab,btn){
+  curPayTab=tab;
+  if(btn){document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  if(!salData)return;
+  const d={annual:1,monthly:12,biweekly:26,weekly:52};
+  const dv=d[tab]||1;
+  const {g,tax,ss,med,st,pen,hlth,oth,net}=salData;
+  const f=v=>fmt(v/dv);
+  let h=`<div class="sal-gross"><span>Gross Pay</span><span>${f(g)}</span></div>`;
+  if(tax>0)h+=`<div class="sal-ln ded"><span>Income Tax</span><span>− ${f(tax)}</span></div>`;
+  if(ss>0)h+=`<div class="sal-ln ded"><span>Social Security</span><span>− ${f(ss)}</span></div>`;
+  if(med>0)h+=`<div class="sal-ln ded"><span>Medicare</span><span>− ${f(med)}</span></div>`;
+  if(st>0)h+=`<div class="sal-ln ded"><span>State Tax</span><span>− ${f(st)}</span></div>`;
+  if(pen>0)h+=`<div class="sal-ln ded"><span>Pension/401k</span><span>− ${f(pen)}</span></div>`;
+  if(hlth>0)h+=`<div class="sal-ln ded"><span>Health Insurance</span><span>− ${f(hlth)}</span></div>`;
+  if(oth>0)h+=`<div class="sal-ln ded"><span>Other</span><span>− ${f(oth)}</span></div>`;
+  h+=`<div class="sal-net"><span>NET PAY ✓</span><span>${f(net)}</span></div>`;
+  document.getElementById('salBK').innerHTML=h;
 }
 
-// ══════════════════════════════════
-// CALC 5: FIXED DEPOSIT
-// ══════════════════════════════════
-function setFdMode(m){
-  fdMode=m;
-  document.getElementById('fdYrBtn').classList.toggle('active',m==='years');
-  document.getElementById('fdMoBtn').classList.toggle('active',m==='months');
-  const sl=document.getElementById('fdDurationSlider');
-  const inp=document.getElementById('fdDuration');
-  if(m==='years'){sl.max=30;inp.max=30;if(parseFloat(inp.value)>30)inp.value=30;}
-  else{sl.max=360;inp.max=360;}
-  updateFdDisplay(); calcFD();
-}
-function updateFdDisplay(){
-  const amt=parseFloat(document.getElementById('fdPrincipal').value)||0;
-  const rate=parseFloat(document.getElementById('fdRate').value)||0;
-  const dur=parseFloat(document.getElementById('fdDuration').value)||0;
-  document.getElementById('fdAmtDisplay').textContent=fmt(amt);
-  document.getElementById('fdRateDisplay').textContent=rate+'%';
-  document.getElementById('fdDurDisplay').textContent=dur+(fdMode==='years'?' Year'+(dur!==1?'s':''):'  Month'+(dur!==1?'s':''));
-}
+// ── FD ──
+function setFdMode(m){fdMode=m;document.getElementById('fdYB').classList.toggle('active',m==='years');document.getElementById('fdMB').classList.toggle('active',m==='months');const s=document.getElementById('fdDurS'),i=document.getElementById('fdDur');s.max=m==='years'?30:360;i.max=m==='years'?30:360;udFd();calcFD();}
+function udFd(){const a=document.getElementById('fdAmt').value||0,r=document.getElementById('fdRate').value||0,d=document.getElementById('fdDur').value||0;document.getElementById('fdAmtD').textContent=fmt(a);document.getElementById('fdRateD').textContent=r+'%';document.getElementById('fdDurD').textContent=d+(fdMode==='years'?' Yr'+( d!=1?'s':''):' Mo'+( d!=1?'s':''));}
 function calcFD(){
-  const P=parseFloat(document.getElementById('fdPrincipal').value)||0;
-  const r=parseFloat(document.getElementById('fdRate').value)/100||0;
-  let t=parseFloat(document.getElementById('fdDuration').value)||0;
-  if(fdMode==='months') t=t/12;
-  const n=parseInt(document.getElementById('fdCompound').value)||1;
+  const P=parseFloat(document.getElementById('fdAmt').value)||0;
+  let r=parseFloat(document.getElementById('fdRate').value)/100||0;
+  let t=parseFloat(document.getElementById('fdDur').value)||0;
+  if(fdMode==='months')t/=12;
+  const n=parseInt(document.getElementById('fdComp').value)||1;
   const A=P*Math.pow(1+r/n,n*t);
-  const interest=A-P;
-  const effRate=(Math.pow(1+r/n,n)-1)*100;
-  document.getElementById('fdMaturity').textContent=fmt(A);
-  document.getElementById('fdInterest').textContent=fmt(interest);
-  document.getElementById('fdEffRate').textContent=effRate.toFixed(2)+'%';
-  drawDonut('fdDonut',[{value:P,color:'#6366f1'},{value:Math.max(interest,0),color:'#10b981'}],'Returns');
+  const int=A-P,eff=(Math.pow(1+r/n,n)-1)*100;
+  document.getElementById('fdMat').textContent=fmt(A);
+  document.getElementById('fdInt').textContent=fmt(int);
+  document.getElementById('fdEff').textContent=eff.toFixed(2)+'%';
+  drawDonut('fdDonut',[{v:P,c:'#6366f1'},{v:Math.max(int,0),c:'#10b981'}],'FD');
 }
 
-// ══════════════════════════════════
-// CALC 6: COMPOUND INTEREST
-// ══════════════════════════════════
-function updateCiDisplay(){
-  const p=parseFloat(document.getElementById('ciPrincipal').value)||0;
-  const c=parseFloat(document.getElementById('ciContrib').value)||0;
-  const r=parseFloat(document.getElementById('ciRate').value)||0;
-  const y=parseFloat(document.getElementById('ciYears').value)||0;
-  document.getElementById('ciAmtDisplay').textContent=fmt(p);
-  document.getElementById('ciContribDisplay').textContent=fmt(c)+'/mo';
-  document.getElementById('ciRateDisplay').textContent=r+'%';
-  document.getElementById('ciYearsDisplay').textContent=y+' Year'+(y!==1?'s':'');
-}
+// ── CI ──
+function udCi(){const p=document.getElementById('ciAmt').value||0,c=document.getElementById('ciCon').value||0,r=document.getElementById('ciRate').value||0,y=document.getElementById('ciYr').value||0;document.getElementById('ciAmtD').textContent=fmt(p);document.getElementById('ciConD').textContent=fmt(c)+'/mo';document.getElementById('ciRateD').textContent=r+'%';document.getElementById('ciYrD').textContent=y+' Yr'+(y!=1?'s':'');}
 function calcCI(){
-  const P=parseFloat(document.getElementById('ciPrincipal').value)||0;
-  const pmt=parseFloat(document.getElementById('ciContrib').value)||0;
-  const rate=parseFloat(document.getElementById('ciRate').value)||0;
-  const years=parseInt(document.getElementById('ciYears').value)||1;
+  const P=parseFloat(document.getElementById('ciAmt').value)||0;
+  const pmt=parseFloat(document.getElementById('ciCon').value)||0;
+  const r=parseFloat(document.getElementById('ciRate').value)/100||0;
+  const yrs=parseInt(document.getElementById('ciYr').value)||1;
   const n=parseInt(document.getElementById('ciFreq').value)||12;
-  const r=rate/100;
-  const monthlyPmt=pmt;
-  // Final balance = P*(1+r/n)^(n*t) + monthlyPmt * ((1+r/n)^(n*t)-1)/(r/n) * (12/n)
-  function getBalance(t){
-    const factor=Math.pow(1+r/n,n*t);
-    const pBase=P*factor;
-    const annualPmt=monthlyPmt*12;
-    if(r===0) return P+annualPmt*t;
-    const pmtFV=annualPmt*((factor-1)/(r));
-    return pBase+pmtFV;
-  }
-  const finalBal=getBalance(years);
-  const totalContrib=P+pmt*12*years;
-  const totalInt=finalBal-totalContrib;
-  const roi=totalContrib>0?(totalInt/totalContrib*100):0;
-  document.getElementById('ciFinal').textContent=fmt(finalBal);
-  document.getElementById('ciContributed').textContent=fmt(totalContrib);
-  document.getElementById('ciInterest').textContent=fmt(Math.max(totalInt,0));
+  function bal(t){const f=Math.pow(1+r/n,n*t);return P*f+(r===0?pmt*12*t:pmt*12*((f-1)/r));}
+  const fin=bal(yrs),tc=P+pmt*12*yrs,ti=fin-tc,roi=tc>0?(ti/tc*100):0;
+  document.getElementById('ciFin').textContent=fmt(fin);
+  document.getElementById('ciCont').textContent=fmt(tc);
+  document.getElementById('ciIntv').textContent=fmt(Math.max(ti,0));
   document.getElementById('ciROI').textContent=roi.toFixed(1)+'%';
-  // Chart
-  const labels=[], contrib=[], portfolio=[];
-  for(let y=0;y<=years;y++){
-    labels.push('Yr '+y);
-    contrib.push(P+pmt*12*y);
-    portfolio.push(getBalance(y));
-  }
-  drawLineChart('ciChart',[{data:contrib,color:'#94a3b8',dash:[6,4]},{data:portfolio,color:'#6366f1'}],labels);
+  const lbl=[],cd=[],pd=[];
+  for(let y=0;y<=yrs;y++){lbl.push('Yr'+y);cd.push(P+pmt*12*y);pd.push(bal(y));}
+  drawLine('ciChart',[{data:cd,color:'#94a3b8',dash:[5,4]},{data:pd,color:'#6366f1'}],lbl);
 }
 
-// ══════════════════════════════════
-// COUNTER ANIMATION
-// ══════════════════════════════════
+// ── DISPLAY UPDATES ──
+function udEmi(){const a=document.getElementById('emiAmt').value||0,r=document.getElementById('emiRate').value||0,t=document.getElementById('emiTen').value||0;document.getElementById('emiAmtD').textContent=fmt(a);document.getElementById('emiRateD').textContent=r+'%';document.getElementById('emiTenD').textContent=t+(emiMode==='years'?' Yr'+(t!=1?'s':''):' Mo'+(t!=1?'s':''));}
+
+// ── COUNTERS ──
 function initCounters(){
-  const els=document.querySelectorAll('.stat-num[data-target]');
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const el=e.target;
-        const target=parseInt(el.dataset.target);
-        const suffix=el.dataset.suffix||'';
-        const duration=2000;
-        const start=performance.now();
-        function tick(now){
-          const p=Math.min((now-start)/duration,1);
-          const ease=1-Math.pow(1-p,3);
-          el.textContent=Math.round(target*ease)+suffix;
-          if(p<1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-        io.unobserve(el);
-      }
-    });
-  },{threshold:0.5});
+  const els=document.querySelectorAll('.snum[data-target]');
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target,tgt=parseInt(el.dataset.target),suf=el.dataset.suffix||'',dur=1800,st=performance.now();function tk(now){const p=Math.min((now-st)/dur,1),ease=1-Math.pow(1-p,3);el.textContent=Math.round(tgt*ease)+suf;if(p<1)requestAnimationFrame(tk);}requestAnimationFrame(tk);io.unobserve(el);}});},{threshold:0.5});
   els.forEach(el=>io.observe(el));
 }
 
-// ── BOOT
+// ── BOOT ──
 window.addEventListener('DOMContentLoaded',init);
+
+// Redraw charts on resize so they fit new width
+let resizeTimer;
+window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(calcAll,200);});
 </script>
 </body>
 </html>
